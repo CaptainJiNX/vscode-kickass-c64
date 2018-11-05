@@ -8,7 +8,7 @@
         "vscode": "^1.28.0"
     },
     "categories": [
-        "Other"
+        "Programming Languages"
     ],
     "activationEvents": [
         "onCommand:extension.sayHello"
@@ -20,6 +20,30 @@
                 "command": "extension.sayHello",
                 "title": "Hello World"
             }
+        ],
+        "languages": [
+            {
+                "id": "kickassembler",
+                "aliases": [
+                    "KickAssembler (C64)",
+                    "kickassembler"
+                ],
+                "extensions": [
+                    ".asm",
+                    ".inc",
+                    ".s",
+                    ".a",
+                    ".lib"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "kickassembler",
+                "scopeName": "source.assembly.kickassembler",
+                "path": "./syntaxes/kickassembler.tmLanguage"
+            }
         ]
     },
     "scripts": {
@@ -27,10 +51,7 @@
         "test": "node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
         "vscode": "^1.1.21",
-        "eslint": "^4.11.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "eslint": "^4.11.0"
     }
 }
