@@ -44,6 +44,12 @@
                 "scopeName": "source.assembly.kickassembler",
                 "path": "./syntaxes/kickassembler.tmLanguage"
             }
+        ],
+        "snippets": [
+            {
+                "language": "kickassembler",
+                "path": "./snippets/snippets.json"
+            }
         ]
     },
     "scripts": {

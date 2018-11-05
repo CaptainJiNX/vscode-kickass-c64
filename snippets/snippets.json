@@ -1,0 +1,62 @@
+{
+	"sub": {
+		"prefix": "sub",
+		"body": "\r\n${1:name}:\t${2}\r\n\t\t\trts\r\n",
+		"description": "6502 assembler subroutine",
+		"scope": "source.assembly.kickassembler"
+	},
+	"brsc": {
+		"prefix": "brsc",
+		"body": "\n//----------------------------------------------------------\n// Code for creating the breakpoint file sent to Vice.\n//----------------------------------------------------------\n.var _useBinFolderForBreakpoints = cmdLineVars.get(\"usebin\") == \"true\"\n.var _createDebugFiles = cmdLineVars.get(\"afo\") == \"true\"\n.print \"File creation \" + [_createDebugFiles\n ? \"enabled (creating breakpoint file)\"\n : \"disabled (no breakpoint file created)\"]\n.var brkFile\n.if(_createDebugFiles) {\n .if(_useBinFolderForBreakpoints)\n .eval brkFile = createFile(\"bin/${2:breakpoints.txt}\")\n else\n .eval brkFile = createFile(\"${2:breakpoints.txt}\")\n}\n.macro break() {\n.if(_createDebugFiles) {\n .eval brkFile.writeln(\"break \" + toHexString(*))\n }\n}\n//------------------------------------------------------\n",
+		"description": "Kick Assembler break file script",
+		"scope": "source.assembly.kickassembler"
+	},
+	"bp": {
+		"prefix": "bp",
+		"body": "\r\n:break()\r\n",
+		"description": "Kick Assembler breakpoint",
+		"scope": "source.assembly.kickassembler"
+	},
+	"cos": {
+		"prefix": "cos",
+		"body": "\r\n*=${1:\\$ADDR} \"${2:Cosinus}\"\r\n.fill ${3:LENGTH}, ${4:AMPLITUDE} + ${5:$4}*cos(toRadians(i*360/${6:SIZE}))\r\n\r\n",
+		"description": "Kick Assembler generate cosinus curve",
+		"scope": "source.assembly.kickassembler"
+	},
+	"for": {
+		"prefix": "for",
+		"body": "\r\n.for(var ${1:i}=${2:0}; $1<${3:UPPER}; $1++) {\r\n\t$SELECTION$4\r\n}\r\n\r\n",
+		"description": "Kick Assembler for loop",
+		"scope": "source.assembly.kickassembler"
+	},
+	"ifel": {
+		"prefix": "ifel",
+		"body": "\r\n.if(${1:EXPR}) {\r\n\t$SELECTION\r\n} else {\r\n\t$5\r\n}\r\n\r\n",
+		"description": "Kick Assembler if-else block",
+		"scope": "source.assembly.kickassembler"
+	},
+	"if": {
+		"prefix": "if",
+		"body": "\r\n.if(${1:EXPR}) {\r\n\t$SELECTION$4\r\n}\r\n\r\n",
+		"description": "Kick Assembler if block",
+		"scope": "source.assembly.kickassembler"
+	},
+	"macro": {
+		"prefix": "macro",
+		"body": "\r\n.macro ${1:MACRONAME} (${2:parameters}) {\r\n\t\t\t\t$3\r\n}\r\n",
+		"description": "Kick Assembler macro",
+		"scope": "source.assembly.kickassembler"
+	},
+	"region": {
+		"prefix": "region",
+		"body": "\r\n//----------------------------------------------------------\r\n//\t\t\t\t${1:Description}\r\n//----------------------------------------------------------\r\n${SELECTION}\r\n//----------------------------------------------------------\r\n\r\n",
+		"description": "Kick Assembler region",
+		"scope": "source.assembly.kickassembler"
+	},
+	"sin": {
+		"prefix": "sin",
+		"body": "\r\n*=${1:\\$ADDR} \"${2:Sinus}\"\r\n.fill ${3:LENGTH}, ${4:AMPLITUDE} + ${5:$4}*sin(toRadians(i*360/${6:SIZE}))\r\n\r\n",
+		"description": "Kick Assembler generate sinus curve",
+		"scope": "source.assembly.kickassembler"
+	}
+}
