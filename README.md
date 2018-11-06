@@ -1,6 +1,6 @@
-# kickassembler-c64 README
+# kickass-c64 README
 
-This is the README for your extension "kickassembler-c64". After writing up a brief description, we recommend including the following sections.
+Code like it's 1988!
 
 ## Features
 

@@ -1,63 +1,108 @@
 {
-    "name": "kickassembler-c64",
-    "displayName": "KickAssembler (C64)",
-    "description": "Code like it's 1988!",
-    "version": "0.0.1",
-    "publisher": "CaptainJiNX",
-    "engines": {
-        "vscode": "^1.28.0"
-    },
-    "categories": [
-        "Programming Languages"
+  "name": "kickass-c64",
+  "displayName": "KickAss (C64)",
+  "description": "Language support for Kick Assembler (C64). Code like it's 1988!",
+  "version": "1.0.0",
+  "publisher": "CaptainJiNX",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "activationEvents": [
+    "onCommand:kickass-c64.build",
+    "onCommand:kickass-c64.build-run",
+    "onCommand:kickass-c64.build-debug",
+    "onCommand:kickass-c64.build-run-startup",
+    "onCommand:kickass-c64.build-debug-startup"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "kickass-c64.build",
+        "title": "Build"
+      },
+      {
+        "command": "kickass-c64.build-run",
+        "title": "Build and Run"
+      },
+      {
+        "command": "kickass-c64.build-debug",
+        "title": "Build and Debug"
+      },
+      {
+        "command": "kickass-c64.build-run-startup",
+        "title": "Build and Run Startup"
+      },
+      {
+        "command": "kickass-c64.build-debug-startup",
+        "title": "Build and Debug Startup"
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.sayHello"
+    "languages": [
+      {
+        "id": "kickassembler",
+        "aliases": [
+          "KickAssembler (C64)",
+          "kickassembler"
+        ],
+        "extensions": [
+          ".asm",
+          ".inc",
+          ".s",
+          ".a",
+          ".lib"
+        ],
+        "configuration": "./language-configuration.json"
+      }
     ],
-    "main": "./extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.sayHello",
-                "title": "Hello World"
-            }
-        ],
-        "languages": [
-            {
-                "id": "kickassembler",
-                "aliases": [
-                    "KickAssembler (C64)",
-                    "kickassembler"
-                ],
-                "extensions": [
-                    ".asm",
-                    ".inc",
-                    ".s",
-                    ".a",
-                    ".lib"
-                ],
-                "configuration": "./language-configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "kickassembler",
-                "scopeName": "source.assembly.kickassembler",
-                "path": "./syntaxes/kickassembler.tmLanguage"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "kickassembler",
-                "path": "./snippets/snippets.json"
-            }
-        ]
-    },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "vscode": "^1.1.21",
-        "eslint": "^4.11.0"
+    "grammars": [
+      {
+        "language": "kickassembler",
+        "scopeName": "source.assembly.kickassembler",
+        "path": "./syntaxes/kickassembler.tmLanguage"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "kickassembler",
+        "path": "./snippets/snippets.json"
+      }
+    ],
+    "configuration": {
+      "title": "KickAss (C64) Configuration",
+      "properties": {
+        "kickass-c64.kickAssPath": {
+          "type": "string",
+          "default": "",
+          "description": "Full path to KickAss.jar"
+        },
+        "kickass-c64.javaPath": {
+          "type": "string",
+          "default": "",
+          "description": "Full path to Java Binary"
+        },
+        "kickass-c64.vicePath": {
+          "type": "string",
+          "default": "",
+          "description": "Full path to Vice Binary"
+        }
+      }
     }
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "prettier": "^1.14.3",
+    "vscode": "^1.1.21"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
 }
