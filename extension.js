@@ -7,32 +7,23 @@ const { spawn, spawnSync } = require("child_process");
 function activate(context) {
   const output = vscode.window.createOutputChannel("Kick Assembler (C64)");
 
-  const javaPath = "/usr/bin/java";
-  const kickPath = "/Users/roger/Downloads/KickAssembler-5.0/KickAss.jar";
-  const vicePath = "/usr/local/bin/x64";
-  // const c64DebuggerPath = "/Applications/C64Debugger.app/Contents/MacOS/C64Debugger";
-  const startupRegex = /^startup\..*$/i;
-  const outDir = "bin";
+  const commands = {
+    "kickass-c64.build": () => compile(),
+    "kickass-c64.build-run": () => run(compile()),
+    "kickass-c64.build-debug": () => run(compile({ debug: true })),
+    "kickass-c64.build-startup": () => compile({ useStartUp: true }),
+    "kickass-c64.build-run-startup": () => run(compile({ useStartUp: true })),
+    "kickass-c64.build-debug-startup": () => run(compile({ debug: true, useStartUp: true }))
+  };
 
-  const build = vscode.commands.registerCommand("kickass-c64.build", function() {
-    compile();
-  });
-
-  const buildRun = vscode.commands.registerCommand("kickass-c64.build-run", function() {
-    run(compile());
-  });
-
-  const buildRunStartup = vscode.commands.registerCommand("kickass-c64.build-run-startup", function() {
-    run(compile({ useStartUp: true }));
-  });
-
-  context.subscriptions.push(build);
-  context.subscriptions.push(buildRun);
-  context.subscriptions.push(buildRunStartup);
+  const toCommand = ([command, callback]) => vscode.commands.registerCommand(command, callback);
+  Object.entries(commands)
+    .map(toCommand)
+    .forEach(command => context.subscriptions.push(command));
 
   function findStartUp(file) {
     const fileDir = path.dirname(file);
-    const startUp = fs.readdirSync(fileDir).find(fileName => startupRegex.test(fileName));
+    const startUp = fs.readdirSync(fileDir).find(fileName => /^startup\..*$/i.test(fileName));
 
     if (startUp) {
       return path.join(fileDir, startUp);
@@ -40,9 +31,11 @@ function activate(context) {
   }
 
   function compile({ debug = false, useStartUp = false } = {}) {
+    const config = getConfig();
     output.clear();
     output.show();
 
+    const outDir = "bin";
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
     const workDir = path.dirname(fileToCompile);
@@ -55,14 +48,13 @@ function activate(context) {
     output.appendLine(`Compiling ${fileToCompile}`);
 
     const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
-    const args = ["-jar", kickPath, "-odir", outDir, "-log", buildLog, "-showmem", ...debugArgs, fileToCompile];
-    let process = spawnSync(javaPath, args, { cwd: workDir });
+    const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
+    let process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
 
     let outputFile, outputDir;
 
     if (process.status === 0) {
-      const ext = path.extname(fileToCompile);
-      outputFile = path.basename(fileToCompile).replace(ext, ".prg");
+      outputFile = replaceFileExtension(fileToCompile, ".prg");
       outputDir = path.join(workDir, outDir);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
@@ -78,17 +70,33 @@ function activate(context) {
     };
   }
 
-  function run({ outputDir, outputFile }) {
+  function run({ outputFile, outputDir, debug }) {
+    const config = getConfig();
     if (!outputFile || !outputDir) return;
 
-    const logfile = `${path.basename(outputFile)}-vice.log`;
-
-    spawn(vicePath, ["-logfile", logfile, outputFile], {
+    const spawnOptions = {
       cwd: outputDir,
       detached: true,
       stdio: "inherit",
       shell: true
-    });
+    };
+
+    if (debug && config.useC64Debugger) {
+      spawn(config.c64DebuggerBin, ["-autojmp", "-prg", outputFile], spawnOptions);
+    } else {
+      const logfile = `${path.basename(outputFile)}-vice.log`;
+      const args = ["-logfile", logfile];
+      const debugArgs = debug ? ["-moncommands", replaceFileExtension(outputFile, ".vs")] : [];
+      spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
+    }
+  }
+
+  function replaceFileExtension(file, newExtension) {
+    return path.basename(file).replace(path.extname(file), newExtension);
+  }
+
+  function getConfig() {
+    return vscode.workspace.getConfiguration("kickass-c64");
   }
 }
 exports.activate = activate;

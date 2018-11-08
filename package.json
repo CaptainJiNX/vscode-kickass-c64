@@ -23,23 +23,33 @@
     "commands": [
       {
         "command": "kickass-c64.build",
-        "title": "Build"
+        "title": "Build",
+        "category": "KickAss (C64)"
       },
       {
         "command": "kickass-c64.build-run",
-        "title": "Build and Run"
+        "title": "Build and Run",
+        "category": "KickAss (C64)"
       },
       {
         "command": "kickass-c64.build-debug",
-        "title": "Build and Debug"
+        "title": "Build and Debug",
+        "category": "KickAss (C64)"
+      },
+      {
+        "command": "kickass-c64.build-startup",
+        "title": "Build Startup",
+        "category": "KickAss (C64)"
       },
       {
         "command": "kickass-c64.build-run-startup",
-        "title": "Build and Run Startup"
+        "title": "Build and Run Startup",
+        "category": "KickAss (C64)"
       },
       {
         "command": "kickass-c64.build-debug-startup",
-        "title": "Build and Debug Startup"
+        "title": "Build and Debug Startup",
+        "category": "KickAss (C64)"
       }
     ],
     "languages": [
@@ -75,20 +85,30 @@
     "configuration": {
       "title": "KickAss (C64) Configuration",
       "properties": {
-        "kickass-c64.kickAssPath": {
+        "kickass-c64.kickAssJar": {
           "type": "string",
-          "default": "",
+          "default": "/Applications/KickAssembler/KickAss.jar",
           "description": "Full path to KickAss.jar"
         },
-        "kickass-c64.javaPath": {
+        "kickass-c64.javaBin": {
           "type": "string",
-          "default": "",
-          "description": "Full path to Java Binary"
+          "default": "java",
+          "description": "Full path to java binary"
         },
-        "kickass-c64.vicePath": {
+        "kickass-c64.viceBin": {
           "type": "string",
-          "default": "",
-          "description": "Full path to Vice Binary"
+          "default": "x64",
+          "description": "Full path to vice binary"
+        },
+        "kickass-c64.useC64Debugger": {
+          "type": "boolean",
+          "default": true,
+          "description": "Debug with C64 debugger"
+        },
+        "kickass-c64.c64DebuggerBin": {
+          "type": "string",
+          "default": "/Applications/C64Debugger.app/Contents/MacOS/C64Debugger",
+          "description": "Full path to C64 debugger binary"
         }
       }
     }
