@@ -48,6 +48,37 @@ This extension contributes the following settings:
 
 > This is only tested on OSX at the moment, but will probably get support for Windows/Linux in the future as well... (It might already work though, I don't know)
 
+## How to contribute
+
+### Prerequisites
+
+- [Visual Studio Code](https://code.visualstudio.com/) (with `esbenp.prettier-vscode`, `dbaeumer.vscode-eslint` extensions installed)
+- [nvm](https://github.com/creationix/nvm) (download and install)
+
+After you clone the repo, run
+
+`nvm install` to get the latest node version
+
+then
+
+`npm install` to install all dependencies
+
+then
+
+`code .` to start coding...
+
+If everything is setup correctly, the code should be automatically formatted correctly on each save.
+
+Running the extension locally:
+
+- Press `F5` to open a new window with the extension loaded.
+- Create a new .asm file
+- Verify that stuff works as expected.
+- Relaunch the extension from the debug toolbar after making changes to the files listed above.
+- You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window load your changes.
+
+Read more about extension development [here](https://code.visualstudio.com/docs/extensions/overview).
+
 ## Release Notes
 
 ### 1.0.0
