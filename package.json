@@ -4,6 +4,14 @@
   "description": "Language support for Kick Assembler (C64). Code like it's 1988!",
   "version": "1.0.0",
   "publisher": "CaptainJiNX",
+  "icon": "images/icon.png",
+  "author": {
+    "name": "Captain JiNX",
+    "email": "ctjinx@gmail.com"
+  },
+  "repository": {
+    "url": "https://github.com/CaptainJiNX/vscode-kickass-c64"
+  },
   "engines": {
     "vscode": "^1.28.0"
   },
