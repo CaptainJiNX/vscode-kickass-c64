@@ -1,65 +1,57 @@
-# kickass-c64 README
+# VSCode KickAss (C64)
 
-Code like it's 1988!
+Visual Studio Code language support for C64 development with [Kick Assembler](http://www.theweb.dk/KickAssembler/Main.html#frontpage).
+
+This is heavily inspired by the [Sublime KickAssembler (C64)](https://github.com/Swoffa/SublimeKickAssemblerC64) package, coded by the almighty [Swoffa](https://csdb.dk/scener/?id=984) from [Noice](https://csdb.dk/group/?id=333). That's where the .tmLanguage file has been copied from.
+
+Also very inspired by the [vscode-kickassembler](https://github.com/tomconte/vscode-kickassembler), made by [Thomas Conté](https://github.com/tomconte)
+
+Thanks to both of you!
+
+_Code like it's 1988!_
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- language configuration/syntax coloring
+- some snippets
+- build, run and debug commands
+- support for [VICE](http://vice-emu.sourceforge.net/) and [C64 Debugger](https://c64-debugger.sourceforge.io/)
 
-For example if there is an image subfolder under your extension project workspace:
+Outputs all build artifacts into a `bin/` folder that will be created in the same folder as the currently opened file.
 
-\!\[feature X\]\(images/feature-x.png\)
+Also supports the Build, Run and Debug of a `Startup.asm` file located in the same folder as the currently opened file.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+**Ideas for future releases**
+
+- support some configuration of build output and startup perhaps.
+- some sort of Language Server implementation
+- ensure support for more than OSX...
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Java runtime (to be able to run KickAss.jar)
+- [Download Kick Assembler](http://www.theweb.dk/KickAssembler/KickAssembler.zip) and extract it to a nice place
+- [Download VICE](http://vice-emu.sourceforge.net/index.html#download) (or install it with `brew install vice`)
+- [Download C64 Debugger](https://sourceforge.net/projects/c64-debugger/files/latest/download)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+- `kickass-c64.kickAssJar`: Full path to KickAss.jar
+- `kickass-c64.javaBin`: Full path to java binary
+- `kickass-c64.viceBin`: Full path to VICE binary
+- `kickass-c64.useC64Debugger`: Debug with C64 Debugger
+- `kickass-c64.c64DebuggerBin`: Full path to C64 Debugger binary
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+> This is only tested on OSX at the moment, but will probably get support for Windows/Linux in the future as well... (It might already work though, I don't know)
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Initial release of KickAss (C64)
 
 **Enjoy!**
