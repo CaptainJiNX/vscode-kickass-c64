@@ -98,17 +98,17 @@
         "kickass-c64.viceBin": {
           "type": "string",
           "default": "x64",
-          "description": "Full path to vice binary"
+          "description": "Full path to VICE binary"
         },
         "kickass-c64.useC64Debugger": {
           "type": "boolean",
           "default": true,
-          "description": "Debug with C64 debugger"
+          "description": "Debug with C64 Debugger"
         },
         "kickass-c64.c64DebuggerBin": {
           "type": "string",
           "default": "/Applications/C64Debugger.app/Contents/MacOS/C64Debugger",
-          "description": "Full path to C64 debugger binary"
+          "description": "Full path to C64 Debugger binary"
         }
       }
     }
@@ -118,8 +118,8 @@
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "eslint": "^5.8.0",
-    "prettier": "^1.14.3",
+    "eslint": "^5.9.0",
+    "prettier": "^1.15.1",
     "vscode": "^1.1.21"
   },
   "prettier": {
