@@ -39,7 +39,7 @@ function activate(context) {
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
     const breakpointSourceFile = replaceFileExtension(fileToCompile, ".vs");
-    const breakpointTargetFile = replaceFileExtension(fileToCompile, ".breakpoints");
+    const breakpointTargetFile = getBreakpointsFile(fileToCompile);
     const workDir = path.dirname(fileToCompile);
     const binfolder = path.join(workDir, outDir);
     const buildLog = path.join(binfolder, "buildlog.txt");
@@ -86,10 +86,9 @@ function activate(context) {
     };
 
     if (debug && config.useC64Debugger) {
-      const c64DebuggerBreakPointFile = replaceFileExtension(outputFile, ".breakpoints");
       spawn(
         config.c64DebuggerBin,
-        ["-autojmp", "-prg", outputFile, "-breakpoints", c64DebuggerBreakPointFile],
+        ["-autojmp", "-prg", outputFile, "-breakpoints", getBreakpointsFile(outputFile)],
         spawnOptions
       );
     } else {
@@ -98,6 +97,10 @@ function activate(context) {
       const debugArgs = debug ? ["-moncommands", replaceFileExtension(outputFile, ".vs")] : [];
       spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
     }
+  }
+
+  function getBreakpointsFile(file) {
+    return replaceFileExtension(file, ".breakpoints");
   }
 
   function replaceFileExtension(file, newExtension) {
