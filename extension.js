@@ -72,9 +72,9 @@ function activate(context) {
     };
   }
 
-  function createC64DebuggerBreakpointFile(binfolder, outputFile) {
-    const sourceFilePath = path.join(binfolder, getViceSymbolsFile(outputFile));
-    const targetFilePath = path.join(binfolder, getBreakpointsFile(outputFile));
+  function createC64DebuggerBreakpointFile(outputDir, outputFile) {
+    const sourceFilePath = path.join(outputDir, getViceSymbolsFile(outputFile));
+    const targetFilePath = path.join(outputDir, getBreakpointsFile(outputFile));
     const viceBreakpointConfigRows = fs
       .readFileSync(sourceFilePath)
       .toString("utf-8")
