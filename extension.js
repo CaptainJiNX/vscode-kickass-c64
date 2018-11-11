@@ -50,7 +50,7 @@ function activate(context) {
 
     output.appendLine(`Compiling ${fileToCompile}`);
 
-    const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
+    const debugArgs = debug ? ["-vicesymbols"] : [];
     const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
     let process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
 
@@ -86,7 +86,7 @@ function activate(context) {
     };
 
     if (debug && config.useC64Debugger) {
-      const c64DebuggerBreakPointFile = path.join(outputDir, replaceFileExtension(outputFile, ".breakpoints"));
+      const c64DebuggerBreakPointFile = replaceFileExtension(outputFile, ".breakpoints");
       spawn(
         config.c64DebuggerBin,
         ["-autojmp", "-prg", outputFile, "-breakpoints", c64DebuggerBreakPointFile],
