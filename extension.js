@@ -38,7 +38,7 @@ function activate(context) {
     const outDir = "bin";
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
-    const breakpointSourceFile = replaceFileExtension(fileToCompile, ".vs");
+    const breakpointSourceFile = getViceSymbolsFile(fileToCompile);
     const breakpointTargetFile = getBreakpointsFile(fileToCompile);
     const workDir = path.dirname(fileToCompile);
     const binfolder = path.join(workDir, outDir);
@@ -94,9 +94,13 @@ function activate(context) {
     } else {
       const logfile = `${path.basename(outputFile)}-vice.log`;
       const args = ["-logfile", logfile];
-      const debugArgs = debug ? ["-moncommands", replaceFileExtension(outputFile, ".vs")] : [];
+      const debugArgs = debug ? ["-moncommands", getViceSymbolsFile(outputFile)] : [];
       spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
     }
+  }
+
+  function getViceSymbolsFile(file) {
+    return replaceFileExtension(file, ".vs");
   }
 
   function getBreakpointsFile(file) {
