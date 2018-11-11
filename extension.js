@@ -74,6 +74,26 @@ function activate(context) {
     };
   }
 
+  function createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile) {
+    const sourceFilePath = path.join(binfolder, breakpointSourceFile);
+    const targetFilePath = path.join(binfolder, breakpointTargetFile);
+    const viceBreakpointConfigRows = fs
+      .readFileSync(sourceFilePath)
+      .toString("utf-8")
+      .split("\n");
+    const c64DebuggerBreakPoints = [];
+
+    viceBreakpointConfigRows.forEach(function(configrow) {
+      if (configrow.indexOf("break") === 0) {
+        c64DebuggerBreakPoints.push(configrow);
+      }
+    });
+
+    const filecontents = c64DebuggerBreakPoints.join("\n");
+    var syncFileWriter = fs.openSync(targetFilePath, "w");
+    fs.writeSync(syncFileWriter, filecontents + "\n");
+  }
+
   function run({ outputFile, outputDir, debug }) {
     const config = getConfig();
     if (!outputFile || !outputDir) return;
@@ -113,26 +133,6 @@ function activate(context) {
 
   function getConfig() {
     return vscode.workspace.getConfiguration("kickass-c64");
-  }
-
-  function createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile) {
-    const sourceFilePath = path.join(binfolder, breakpointSourceFile);
-    const targetFilePath = path.join(binfolder, breakpointTargetFile);
-    const viceBreakpointConfigRows = fs
-      .readFileSync(sourceFilePath)
-      .toString("utf-8")
-      .split("\n");
-    const c64DebuggerBreakPoints = [];
-
-    viceBreakpointConfigRows.forEach(function(configrow) {
-      if (configrow.indexOf("break") === 0) {
-        c64DebuggerBreakPoints.push(configrow);
-      }
-    });
-
-    const filecontents = c64DebuggerBreakPoints.join("\n");
-    var syncFileWriter = fs.openSync(targetFilePath, "w");
-    fs.writeSync(syncFileWriter, filecontents + "\n");
   }
 }
 exports.activate = activate;
