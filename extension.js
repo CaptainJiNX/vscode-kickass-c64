@@ -87,7 +87,11 @@ function activate(context) {
 
     if (debug && config.useC64Debugger) {
       const c64DebuggerBreakPointFile = path.join(outputDir, replaceFileExtension(outputFile, ".breakpoints"));
-      spawn(config.c64DebuggerBin, ["-autojmp", "-prg", outputFile, "-breakpoints", c64DebuggerBreakPointFile], spawnOptions);
+      spawn(
+        config.c64DebuggerBin,
+        ["-autojmp", "-prg", outputFile, "-breakpoints", c64DebuggerBreakPointFile],
+        spawnOptions
+      );
     } else {
       const logfile = `${path.basename(outputFile)}-vice.log`;
       const args = ["-logfile", logfile];
@@ -107,23 +111,24 @@ function activate(context) {
   function createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile) {
     const sourceFilePath = path.join(binfolder, breakpointSourceFile);
     const targetFilePath = path.join(binfolder, breakpointTargetFile);
-    const viceBreakpointConfigRows = fs.readFileSync(sourceFilePath).toString('utf-8').split("\n");
+    const viceBreakpointConfigRows = fs
+      .readFileSync(sourceFilePath)
+      .toString("utf-8")
+      .split("\n");
     const c64DebuggerBreakPoints = [];
 
-    viceBreakpointConfigRows.forEach(function (configrow) {
-      if (configrow.indexOf('break') === 0) {
+    viceBreakpointConfigRows.forEach(function(configrow) {
+      if (configrow.indexOf("break") === 0) {
         c64DebuggerBreakPoints.push(configrow);
       }
     });
 
     const filecontents = c64DebuggerBreakPoints.join("\n");
-    var syncFileWriter = fs.openSync(targetFilePath, 'w');
-    fs.writeSync(syncFileWriter, filecontents + '\n');
-
+    var syncFileWriter = fs.openSync(targetFilePath, "w");
+    fs.writeSync(syncFileWriter, filecontents + "\n");
   }
-
 }
 exports.activate = activate;
 
-function deactivate() { }
+function deactivate() {}
 exports.deactivate = deactivate;
