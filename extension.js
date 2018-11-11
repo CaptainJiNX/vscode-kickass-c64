@@ -71,23 +71,17 @@ function activate(context) {
   }
 
   function createBreakpointsFile(outputDir, outputFile) {
-    const sourceFilePath = path.join(outputDir, getViceSymbolsFile(outputFile));
-    const targetFilePath = path.join(outputDir, getBreakpointsFile(outputFile));
-    const viceBreakpointConfigRows = fs
-      .readFileSync(sourceFilePath)
-      .toString("utf-8")
-      .split("\n");
-    const c64DebuggerBreakPoints = [];
+    const viceSymbols = path.join(outputDir, getViceSymbolsFile(outputFile));
 
-    viceBreakpointConfigRows.forEach(function(configrow) {
-      if (configrow.indexOf("break") === 0) {
-        c64DebuggerBreakPoints.push(configrow);
-      }
-    });
+    const breakpoints = fs
+      .readFileSync(viceSymbols, { encoding: "utf8" })
+      .split("\n")
+      .filter(x => x.startsWith("break"));
 
-    const filecontents = c64DebuggerBreakPoints.join("\n");
-    var syncFileWriter = fs.openSync(targetFilePath, "w");
-    fs.writeSync(syncFileWriter, filecontents + "\n");
+    const breakpointsFile = path.join(outputDir, getBreakpointsFile(outputFile));
+
+    fs.writeFileSync(breakpointsFile, breakpoints.join("\n") + "\n");
+    output.appendLine(`Wrote breakpoints to ${breakpointsFile}`);
   }
 
   function run({ outputFile, outputDir, debug }) {
