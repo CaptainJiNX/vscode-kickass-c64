@@ -6,6 +6,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.1.0] - 2018-11-12
+
+### Added
+
+- Generating .breakpoints file for debugger
+- Tested on Windows 10
+
 ## [1.0.0] - 2018-11-09
 
 ### Added

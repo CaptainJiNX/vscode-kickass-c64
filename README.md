@@ -46,7 +46,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-> This is only tested on OSX at the moment, but will probably get support for Windows/Linux in the future as well... (It might already work though, I don't know)
+- Lots of missing features, but it seems to be working on OSX and Windows 10 now at least.
 
 ## How to contribute
 
@@ -80,6 +80,10 @@ Running the extension locally:
 Read more about extension development [here](https://code.visualstudio.com/docs/extensions/overview).
 
 ## Release Notes
+
+### 1.1.0
+
+Added generation of .breakpoint file for debugger
 
 ### 1.0.0
 
