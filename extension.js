@@ -38,8 +38,11 @@ function activate(context) {
     const outDir = "bin";
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
+    const breakpointSourceFile = replaceFileExtension(fileToCompile, ".vs");
+    const breakpointTargetFile = replaceFileExtension(fileToCompile, ".breakpoints");
     const workDir = path.dirname(fileToCompile);
-    const buildLog = path.join(outDir, "buildlog.txt");
+    const binfolder = path.join(workDir, outDir);
+    const buildLog = path.join(binfolder, "buildlog.txt");
 
     if (!fs.existsSync(path.join(workDir, outDir))) {
       fs.mkdirSync(path.join(workDir, outDir));
@@ -56,6 +59,7 @@ function activate(context) {
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
       outputDir = path.join(workDir, outDir);
+      createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
       output.append(process.stderr.toString());
@@ -82,7 +86,8 @@ function activate(context) {
     };
 
     if (debug && config.useC64Debugger) {
-      spawn(config.c64DebuggerBin, ["-autojmp", "-prg", outputFile], spawnOptions);
+      const c64DebuggerBreakPointFile = path.join(outputDir, replaceFileExtension(outputFile, ".breakpoints"));
+      spawn(config.c64DebuggerBin, ["-autojmp", "-prg", outputFile, "-breakpoints", c64DebuggerBreakPointFile], spawnOptions);
     } else {
       const logfile = `${path.basename(outputFile)}-vice.log`;
       const args = ["-logfile", logfile];
@@ -98,8 +103,27 @@ function activate(context) {
   function getConfig() {
     return vscode.workspace.getConfiguration("kickass-c64");
   }
+
+  function createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile) {
+    const sourceFilePath = path.join(binfolder, breakpointSourceFile);
+    const targetFilePath = path.join(binfolder, breakpointTargetFile);
+    const viceBreakpointConfigRows = fs.readFileSync(sourceFilePath).toString('utf-8').split("\n");
+    const c64DebuggerBreakPoints = [];
+
+    viceBreakpointConfigRows.forEach(function (configrow) {
+      if (configrow.indexOf('break') === 0) {
+        c64DebuggerBreakPoints.push(configrow);
+      }
+    });
+
+    const filecontents = c64DebuggerBreakPoints.join("\n");
+    var syncFileWriter = fs.openSync(targetFilePath, 'w');
+    fs.writeSync(syncFileWriter, filecontents + '\n');
+
+  }
+
 }
 exports.activate = activate;
 
-function deactivate() {}
+function deactivate() { }
 exports.deactivate = deactivate;
