@@ -44,8 +44,8 @@ function activate(context) {
     const binfolder = path.join(workDir, outDir);
     const buildLog = path.join(binfolder, "buildlog.txt");
 
-    if (!fs.existsSync(path.join(workDir, outDir))) {
-      fs.mkdirSync(path.join(workDir, outDir));
+    if (!fs.existsSync(binfolder)) {
+      fs.mkdirSync(binfolder);
     }
 
     output.appendLine(`Compiling ${fileToCompile}`);
@@ -58,7 +58,7 @@ function activate(context) {
 
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
-      outputDir = path.join(workDir, outDir);
+      outputDir = binfolder;
       createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
