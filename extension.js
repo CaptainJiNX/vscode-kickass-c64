@@ -50,7 +50,7 @@ function activate(context) {
 
     output.appendLine(`Compiling ${fileToCompile}`);
 
-    const debugArgs = debug ? ["-vicesymbols"] : [];
+    const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
     const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
     let process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
 
