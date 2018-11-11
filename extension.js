@@ -38,8 +38,6 @@ function activate(context) {
     const outDir = "bin";
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
-    const breakpointSourceFile = getViceSymbolsFile(fileToCompile);
-    const breakpointTargetFile = getBreakpointsFile(fileToCompile);
     const workDir = path.dirname(fileToCompile);
     const binfolder = path.join(workDir, outDir);
     const buildLog = path.join(binfolder, "buildlog.txt");
@@ -59,7 +57,7 @@ function activate(context) {
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
       outputDir = binfolder;
-      createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile);
+      createC64DebuggerBreakpointFile(binfolder, outputFile);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
       output.append(process.stderr.toString());
@@ -74,9 +72,9 @@ function activate(context) {
     };
   }
 
-  function createC64DebuggerBreakpointFile(binfolder, breakpointSourceFile, breakpointTargetFile) {
-    const sourceFilePath = path.join(binfolder, breakpointSourceFile);
-    const targetFilePath = path.join(binfolder, breakpointTargetFile);
+  function createC64DebuggerBreakpointFile(binfolder, outputFile) {
+    const sourceFilePath = path.join(binfolder, getViceSymbolsFile(outputFile));
+    const targetFilePath = path.join(binfolder, getBreakpointsFile(outputFile));
     const viceBreakpointConfigRows = fs
       .readFileSync(sourceFilePath)
       .toString("utf-8")
