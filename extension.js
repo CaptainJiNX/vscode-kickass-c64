@@ -39,11 +39,11 @@ function activate(context) {
     const currentFile = vscode.window.activeTextEditor.document.fileName;
     const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
     const workDir = path.dirname(fileToCompile);
-    const binfolder = path.join(workDir, outDir);
-    const buildLog = path.join(binfolder, "buildlog.txt");
+    const outputDir = path.join(workDir, outDir);
+    const buildLog = path.join(outputDir, "buildlog.txt");
 
-    if (!fs.existsSync(binfolder)) {
-      fs.mkdirSync(binfolder);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
     }
 
     output.appendLine(`Compiling ${fileToCompile}`);
@@ -51,19 +51,17 @@ function activate(context) {
     const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
     const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
     let process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
+    output.append(process.stdout.toString());
 
-    let outputFile, outputDir;
+    let outputFile;
 
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
-      outputDir = binfolder;
-      createBreakpointsFile(binfolder, outputFile);
+      createBreakpointsFile(outputDir, outputFile);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
       output.append(process.stderr.toString());
     }
-
-    output.append(process.stdout.toString());
 
     return {
       outputFile,
