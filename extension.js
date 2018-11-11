@@ -57,7 +57,7 @@ function activate(context) {
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
       outputDir = binfolder;
-      createC64DebuggerBreakpointFile(binfolder, outputFile);
+      createBreakpointsFile(binfolder, outputFile);
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
       output.append(process.stderr.toString());
@@ -72,7 +72,7 @@ function activate(context) {
     };
   }
 
-  function createC64DebuggerBreakpointFile(outputDir, outputFile) {
+  function createBreakpointsFile(outputDir, outputFile) {
     const sourceFilePath = path.join(outputDir, getViceSymbolsFile(outputFile));
     const targetFilePath = path.join(outputDir, getBreakpointsFile(outputFile));
     const viceBreakpointConfigRows = fs
