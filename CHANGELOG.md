@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-11-12
+
+### Fixed
+
+- Failed to compile when no symbolfile existed.
+
 ## [1.1.0] - 2018-11-12
 
 ### Added

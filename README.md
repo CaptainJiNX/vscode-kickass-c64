@@ -81,6 +81,10 @@ Read more about extension development [here](https://code.visualstudio.com/docs/
 
 ## Release Notes
 
+### 1.1.1
+
+Bugfix: compile stopped working if no symbol file existed
+
 ### 1.1.0
 
 Added generation of .breakpoint file for debugger
