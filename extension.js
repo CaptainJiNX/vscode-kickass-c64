@@ -57,7 +57,9 @@ function activate(context) {
 
     if (process.status === 0) {
       outputFile = replaceFileExtension(fileToCompile, ".prg");
-      createBreakpointsFile(outputDir, outputFile);
+      if (debug) {
+        createBreakpointsFile(outputDir, outputFile);
+      }
     } else {
       vscode.window.showErrorMessage("Compilation failed with errors.");
       output.append(process.stderr.toString());
@@ -72,11 +74,19 @@ function activate(context) {
 
   function createBreakpointsFile(outputDir, outputFile) {
     const viceSymbols = path.join(outputDir, getViceSymbolsFile(outputFile));
+    if (!fs.existsSync(viceSymbols)) {
+      return;
+    }
 
     const breakpoints = fs
       .readFileSync(viceSymbols, { encoding: "utf8" })
       .split("\n")
       .filter(x => x.startsWith("break"));
+
+    if (breakpoints.length === 0) {
+      output.appendLine("No breakpoints found, skipping.");
+      return;
+    }
 
     const breakpointsFile = path.join(outputDir, getBreakpointsFile(outputFile));
 
