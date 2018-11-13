@@ -2,10 +2,33 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 
+const helpTexts = {
+  ...require("./helpTexts/illegal-opcodes"),
+  ...require("./helpTexts/kickass"),
+  ...require("./helpTexts/sid-registers"),
+  ...require("./helpTexts/vic-registers")
+};
+
 const { spawn, spawnSync } = require("child_process");
 
 function activate(context) {
   const output = vscode.window.createOutputChannel("Kick Assembler (C64)");
+
+  vscode.languages.registerHoverProvider(
+    { scheme: "*", language: "kickassembler" },
+    {
+      provideHover(document, position) {
+        const word = document.getText(document.getWordRangeAtPosition(position, /[.\:\w\$]+/));
+        const helpText = helpTexts[word.toLowerCase()];
+        if (!helpText) return null;
+
+        const markdown = new vscode.MarkdownString();
+        markdown.appendCodeblock(helpText.name, "kickassembler");
+        markdown.appendMarkdown(helpText.descr);
+        return new vscode.Hover(markdown);
+      }
+    }
+  );
 
   const commands = {
     "kickass-c64.build": () => compile(),
@@ -135,6 +158,7 @@ function activate(context) {
     return vscode.workspace.getConfiguration("kickass-c64");
   }
 }
+
 exports.activate = activate;
 
 function deactivate() {}

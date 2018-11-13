@@ -1,0 +1,175 @@
+{
+  "$d400": {
+    "descr": "Voice #1 frequency. Write-only.",
+    "name": "$d400 (SID register)",
+    "url": ""
+  },
+
+  "$d401": {
+    "descr": "Voice #1 frequency. Write-only.",
+    "name": "$d401 (SID register)",
+    "url": ""
+  },
+
+  "$d402": {
+    "descr": "Voice #1 pulse width. Write-only.",
+    "name": "$d402 (SID register)",
+    "url": ""
+  },
+
+  "$d403": {
+    "descr": "Voice #1 pulse width. Write-only.",
+    "name": "$d403 (SID register)",
+    "url": ""
+  },
+
+  "$d404": {
+    "descr": "Voice #1 control register. Write-only",
+    "name": "$d404 (SID register)",
+    "url": ""
+  },
+
+  "$d405": {
+    "descr": "Voice #1 Attack and Decay length. Write-only",
+    "name": "$d405 (SID register)",
+    "url": ""
+  },
+
+  "$d406": {
+    "descr": "Voice #1 Sustain volume and Release length. Write-only",
+    "name": "$d406 (SID register)",
+    "url": ""
+  },
+
+  "$d407": {
+    "descr": "Voice #2 frequency. Write-only.",
+    "name": "$d407 (SID register)",
+    "url": ""
+  },
+
+  "$d408": {
+    "descr": "Voice #2 frequency. Write-only.",
+    "name": "$d408 (SID register)",
+    "url": ""
+  },
+
+  "$d409": {
+    "descr": "Voice #2 pulse width. Write-only.",
+    "name": "$d409 (SID register)",
+    "url": ""
+  },
+
+  "$d40a": {
+    "descr": "Voice #2 pulse width. Write-only.",
+    "name": "$d40a (SID register)",
+    "url": ""
+  },
+
+  "$d40b": {
+    "descr": "Voice #2 control register. Write-only",
+    "name": "$d40b (SID register)",
+    "url": ""
+  },
+
+  "$d40c": {
+    "descr": "Voice #2 Attack and Decay length. Write-only",
+    "name": "$d40c (SID register)",
+    "url": ""
+  },
+
+  "$d40d": {
+    "descr": "Voice #2 Sustain volume and Release length. Write-only",
+    "name": "$d40d (SID register)",
+    "url": ""
+  },
+
+  "$d40e": {
+    "descr": "Voice #3 frequency. Write-only.",
+    "name": "$d40e (SID register)",
+    "url": ""
+  },
+
+  "$d40f": {
+    "descr": "Voice #3 frequency. Write-only.",
+    "name": "$d40f (SID register)",
+    "url": ""
+  },
+
+  "$d410": {
+    "descr": "Voice #3 pulse width. Write-only.",
+    "name": "$d410 (SID register)",
+    "url": ""
+  },
+
+  "$d411": {
+    "descr": "Voice #3 pulse width. Write-only.",
+    "name": "$d411 (SID register)",
+    "url": ""
+  },
+
+  "$d412": {
+    "descr": "Voice #3 control register. Write-only",
+    "name": "$d412 (SID register)",
+    "url": ""
+  },
+
+  "$d413": {
+    "descr": "Voice #3 Attack and Decay length. Write-only",
+    "name": "$d413 (SID register)",
+    "url": ""
+  },
+
+  "$d414": {
+    "descr": "Voice #3 Sustain volume and Release length. Write-only",
+    "name": "$d414 (SID register)",
+    "url": ""
+  },
+
+  "$d415": {
+    "descr": "Filter cutoff frequency low byte",
+    "name": "$d415 (SID register)",
+    "url": ""
+  },
+
+  "$d416": {
+    "descr": "Filter cutoff frequency high byte",
+    "name": "$d416 (SID register)",
+    "url": ""
+  },
+
+  "$d417": {
+    "descr": "Filter resonance and routing",
+    "name": "$d417 (SID register)",
+    "url": ""
+  },
+
+  "$d418": {
+    "descr": "Filter mode and main volume control",
+    "name": "$d418 (SID register)",
+    "url": ""
+  },
+
+  "$d419": {
+    "descr": "Paddle x value (read only)",
+    "name": "$d419 (SID register)",
+    "url": ""
+  },
+
+  "$d41a": {
+    "descr": "Paddle y value (read only)",
+    "name": "$d41a (SID register)",
+    "url": ""
+  },
+
+  "$d41b": {
+    "descr": "Oscillator voice 3 (read only)",
+    "name": "$d41b (SID register)",
+    "url": ""
+  },
+
+  "$d41c": {
+    "descr": "Envelope voice 3 (read only)",
+    "name": "$d41c (SID register)",
+    "url": ""
+  }
+}

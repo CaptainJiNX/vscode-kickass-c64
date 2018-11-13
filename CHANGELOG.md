@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Added
+
+- Support for some help when hovering over some VIC and SID registers (and some illegal op-codes)
+
 ## [1.1.1] - 2018-11-12
 
 ### Fixed

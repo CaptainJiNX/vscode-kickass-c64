@@ -20,6 +20,7 @@
     "Snippets"
   ],
   "activationEvents": [
+    "onLanguage:kickassembler",
     "onCommand:kickass-c64.build",
     "onCommand:kickass-c64.build-run",
     "onCommand:kickass-c64.build-debug",
