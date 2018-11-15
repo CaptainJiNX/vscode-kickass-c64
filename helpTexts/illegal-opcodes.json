@@ -1,97 +1,81 @@
 {
   "rla": {
-    "descr": "{addr} = rol {addr} A = A and {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: AND, ROL)",
-    "url": ""
+    "name": "{addr} = rol {addr} A = A and {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: AND, ROL)"
   },
 
   "sre": {
-    "descr": "{addr}={addr}/2 A:=A eor {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: EOR, LSR)",
-    "url": ""
+    "name": "{addr}={addr}/2 A:=A eor {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: EOR, LSR)"
   },
 
   "rra": {
-    "descr": "{addr} = ror {addr} A = A adc {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: ADC, ROR)",
-    "url": ""
+    "name": "{addr} = ror {addr} A = A adc {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: ADC, ROR)"
   },
 
   "sax": {
-    "descr": "{addr} = A & X",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: STA, STX)",
-    "url": ""
+    "name": "{addr} = A & X",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: STA, STX)"
   },
 
   "lax": {
-    "descr": "A,X = {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: LDA, LDX)",
-    "url": ""
+    "name": "A,X = {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: LDA, LDX)"
   },
 
   "dcp": {
-    "descr": "{addr} = {addr} - 1 A cmp {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: CMP, DEC)",
-    "url": ""
+    "name": "{addr} = {addr} - 1 A cmp {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: CMP, DEC)"
   },
 
   "isc": {
-    "descr": "{addr} = {addr} + 1 A = A - {addr}",
-    "name": "Combination of two operations with the same addressing mode (Sub-instructions: SBC, INC)",
-    "url": ""
+    "name": "{addr} = {addr} + 1 A = A - {addr}",
+    "descr": "Combination of two operations with the same addressing mode (Sub-instructions: SBC, INC)"
   },
 
   "anc": {
-    "descr": "A = A & #{imm} ",
-    "name": "Combination of an immediate and an implied command (Sub-instructions: AND, ASL/ROL)",
-    "url": ""
+    "name": "A = A & #{imm} ",
+    "descr": "Combination of an immediate and an implied command (Sub-instructions: AND, ASL/ROL)"
   },
 
   "alr": {
-    "descr": "A = (A & #{imm}) / 2",
-    "name": "Combination of an immediate and an implied command (Sub-instructions: AND, LSR)",
-    "url": ""
+    "name": "A = (A & #{imm}) / 2",
+    "descr": "Combination of an immediate and an implied command (Sub-instructions: AND, LSR)"
   },
 
   "arr": {
-    "descr": "A:=(A&#{imm})/2",
-    "name": "Combination of an immediate and an implied command (Sub-instructions: AND, ROR)",
-    "url": ""
+    "name": "A:=(A&#{imm})/2",
+    "descr": "Combination of an immediate and an implied command (Sub-instructions: AND, ROR)"
   },
 
   "sbx": {
-    "descr": "X =A & X - #{imm}",
-    "name": "Combination of an immediate and an implied command (Sub-instructions: CMP, DEX)",
-    "url": ""
+    "name": "X =A & X - #{imm}",
+    "descr": "Combination of an immediate and an implied command (Sub-instructions: CMP, DEX)"
   },
 
   "las": {
-    "descr": "A,X,SP = {addr} & SP",
-    "name": "Combinations of STA/TXS and LDA/TSX",
-    "url": ""
+    "name": "A,X,SP = {addr} & SP",
+    "descr": "Combinations of STA/TXS and LDA/TSX"
   },
 
   "sha": {
-    "descr": "{addr} = A & X & {H+1} ",
-    "name": "Combinations of STA/STX/STY",
-    "url": ""
+    "name": "{addr} = A & X & {H+1} ",
+    "descr": "Combinations of STA/STX/STY"
   },
 
   "shx": {
-    "descr": "{addr} = X & {H+1}",
-    "name": "Combinations of STA/STX/STY",
-    "url": ""
+    "name": "{addr} = X & {H+1}",
+    "descr": "Combinations of STA/STX/STY"
   },
 
   "shy": {
-    "descr": "{addr} = Y & {H+1}",
-    "name": "Combinations of STA/STX/STY",
-    "url": ""
+    "name": "{addr} = Y & {H+1}",
+    "descr": "Combinations of STA/STX/STY"
   },
 
   "tas": {
-    "descr": "SP = A & X {addr} = SP & {H+1}",
-    "name": "Combinations of STA/TXS and LDA/TSX",
-    "url": ""
+    "name": "SP = A & X {addr} = SP & {H+1}",
+    "descr": "Combinations of STA/TXS and LDA/TSX"
   }
 }
