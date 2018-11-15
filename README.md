@@ -25,7 +25,6 @@ Also supports the Build, Run and Debug of a `Startup.asm` file located in the sa
 
 - support some configuration of build output and startup perhaps.
 - some sort of Language Server implementation
-- ensure support for more than OSX...
 
 ## Requirements
 
@@ -80,6 +79,10 @@ Running the extension locally:
 Read more about extension development [here](https://code.visualstudio.com/docs/extensions/overview).
 
 ## Release Notes
+
+### 1.2.0
+
+Support for some help when hovering over VIC and SID registers, illegal op-codes and preprocessor directives
 
 ### 1.1.1
 
