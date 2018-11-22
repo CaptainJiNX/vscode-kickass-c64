@@ -3,10 +3,10 @@ const path = require("path");
 const fs = require("fs");
 
 const helpTexts = {
-  ...require("./helpTexts/illegal-opcodes"),
-  ...require("./helpTexts/kickass"),
-  ...require("./helpTexts/sid-registers"),
-  ...require("./helpTexts/vic-registers")
+  ...require("../helpTexts/illegal-opcodes"),
+  ...require("../helpTexts/kickass"),
+  ...require("../helpTexts/sid-registers"),
+  ...require("../helpTexts/vic-registers")
 };
 
 const { spawn, spawnSync } = require("child_process");

@@ -1,0 +1,18 @@
+{
+  "name": "kickass-c64-client",
+  "description": "VSCode part of KickAss (C64)",
+  "repository": {
+    "url": "https://github.com/CaptainJiNX/vscode-kickass-c64"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "scripts": {
+    "update-vscode": "vscode-install",
+    "postinstall": "vscode-install"
+  },
+  "devDependencies": {
+    "vscode": "^1.1.21"
+  }
+}
