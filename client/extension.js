@@ -1,6 +1,7 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
+const { LanguageClient, TransportKind } = require("vscode-languageclient");
 
 const helpTexts = {
   ...require("../helpTexts/illegal-opcodes"),
@@ -13,6 +14,29 @@ const { spawn, spawnSync } = require("child_process");
 
 function activate(context) {
   const output = vscode.window.createOutputChannel("Kick Assembler (C64)");
+
+  const server = {
+    module: context.asAbsolutePath(path.join("server", "server.js")),
+    transport: TransportKind.ipc
+  };
+
+  const serverOptions = {
+    run: server,
+    debug: {
+      ...server,
+      options: { execArgv: ["--nolazy", "--inspect=6009"] }
+    }
+  };
+
+  const clientOptions = {
+    documentSelector: [{ scheme: "file", language: "kickassembler" }],
+    synchronize: {
+      fileEvents: vscode.workspace.createFileSystemWatcher("**/.clientrc")
+    }
+  };
+
+  const client = new LanguageClient("kickAss", "KickAss Language Server", serverOptions, clientOptions);
+  client.start();
 
   vscode.languages.registerHoverProvider(
     { scheme: "*", language: "kickassembler" },

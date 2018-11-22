@@ -1,0 +1,14 @@
+{
+  "name": "kickass-c64-server",
+  "description": "Language server part of KickAss (C64)",
+  "repository": {
+    "url": "https://github.com/CaptainJiNX/vscode-kickass-c64"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "vscode-languageserver": "^5.1.0"
+  }
+}
