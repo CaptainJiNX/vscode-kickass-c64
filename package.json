@@ -128,7 +128,7 @@
   },
   "devDependencies": {
     "eslint": "^5.9.0",
-    "prettier": "^1.15.1",
+    "prettier": "^1.15.2",
     "vscode": "^1.1.21"
   },
   "prettier": {
