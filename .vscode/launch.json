@@ -11,6 +11,13 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Server",
+      "port": 6009,
+      "restart": true
     }
   ]
 }

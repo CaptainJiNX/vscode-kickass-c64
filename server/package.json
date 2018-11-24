@@ -9,6 +9,8 @@
     "node": "*"
   },
   "dependencies": {
-    "vscode-languageserver": "^5.1.0"
+    "tmp": "0.0.33",
+    "vscode-languageserver": "^5.1.0",
+    "vscode-uri": "^1.0.6"
   }
 }
