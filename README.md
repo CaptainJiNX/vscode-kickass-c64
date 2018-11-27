@@ -80,6 +80,10 @@ Read more about extension development [here](https://code.visualstudio.com/docs/
 
 ## Release Notes
 
+### 1.2.1
+
+Fix for flatmap-stream vulnerability
+
 ### 1.2.0
 
 Support for some help when hovering over VIC and SID registers, illegal op-codes and preprocessor directives
