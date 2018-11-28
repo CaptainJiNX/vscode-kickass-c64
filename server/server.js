@@ -1,7 +1,5 @@
-const fs = require("fs");
 const path = require("path");
-const tmp = require("tmp");
-const { spawnSync } = require("child_process");
+const { spawn } = require("child_process");
 const Uri = require("vscode-uri").default;
 const {
   createConnection,
@@ -11,6 +9,7 @@ const {
   DidChangeConfigurationNotification,
   Position
 } = require("vscode-languageserver");
+const kickassRunnerJar = path.join(__dirname, "KickAssRunner.jar");
 
 const defaultSettings = { kickAssJar: "/Applications/KickAssembler/KickAss.jar", javaBin: "java" };
 let globalSettings = defaultSettings;
@@ -73,60 +72,62 @@ async function validateDocument(document) {
 
 async function getErrors(document) {
   const settings = await getDocumentSettings(document.uri);
+  const fileName = Uri.parse(document.uri).fsPath;
 
-  const dir = path.dirname(Uri.parse(document.uri).fsPath);
-  const fileToCompile = tmp.tmpNameSync({ dir });
-  const asmInfoFile = tmp.tmpNameSync({ dir });
+  const asmInfo = await new Promise(resolve => {
+    let output = "";
 
-  try {
-    fs.writeFileSync(fileToCompile, document.getText());
-    spawnSync(
+    const proc = spawn(
       settings.javaBin,
       [
-        "-jar",
-        settings.kickAssJar,
-        fileToCompile,
-        "-noeval",
-        "-warningsoff",
+        "-cp",
+        `${settings.kickAssJar}:${kickassRunnerJar}`,
+        "com.noice.kickass.KickAssRunner",
+        fileName,
         "-asminfo",
         "errors",
         "-asminfo",
-        "files",
-        "-asminfofile",
-        asmInfoFile
+        "files"
       ],
-      { cwd: dir }
+      { cwd: path.dirname(fileName) }
     );
 
-    const asmInfo = fs.readFileSync(asmInfoFile, "utf8");
-    const filesIndex = asmInfo.indexOf("[files]");
-    const errorsIndex = asmInfo.indexOf("[errors]");
-    const filesPart = asmInfo.substring(filesIndex, errorsIndex > filesIndex ? errorsIndex : undefined);
-    const errorsPart = asmInfo.substring(errorsIndex, filesIndex > errorsIndex ? filesIndex : undefined);
+    proc.stdout.on("data", data => {
+      output += data;
+    });
 
-    const currentFileNumber = filesPart
-      .split("\n")
-      .slice(1)
-      .map(line => {
-        const [number, file] = line.split(";");
-        return { number, file };
-      })
-      .filter(({ file }) => file === fileToCompile)
-      .map(({ number }) => Number(number))[0];
+    proc.on("close", () => {
+      resolve(output);
+    });
 
-    const errors = errorsPart
-      .split("\n")
-      .slice(1)
-      .map(parseLine)
-      .filter(({ fileNumber }) => fileNumber === currentFileNumber)
-      .map(toError)
-      .filter(Boolean);
+    proc.stdin.write(document.getText());
+    proc.stdin.end();
+  });
 
-    return errors;
-  } finally {
-    fs.unlink(fileToCompile, () => {});
-    fs.unlink(asmInfoFile, () => {});
-  }
+  const filesIndex = asmInfo.indexOf("[files]");
+  const errorsIndex = asmInfo.indexOf("[errors]");
+  const filesPart = asmInfo.substring(filesIndex, errorsIndex > filesIndex ? errorsIndex : undefined);
+  const errorsPart = asmInfo.substring(errorsIndex, filesIndex > errorsIndex ? filesIndex : undefined);
+
+  const currentFileNumber = filesPart
+    .split("\n")
+    .slice(1)
+    .map(line => {
+      const [number, file] = line.split(";");
+      return { number, file };
+    })
+    .filter(({ file }) => file === fileName)
+    .map(({ number }) => Number(number))[0];
+
+  const errors = errorsPart
+    .split("\n")
+    .slice(1)
+    .map(parseLine)
+    .filter(({ fileNumber }) => fileNumber === currentFileNumber)
+    .map(toError)
+    .filter(Boolean);
+
+  return errors;
 
   function parseLine(line) {
     const [, positions, message] = (line || "").split(";");
