@@ -24,7 +24,6 @@ Also supports the Build, Run and Debug of a `Startup.asm` file located in the sa
 **Ideas for future releases**
 
 - support some configuration of build output and startup perhaps.
-- some sort of Language Server implementation
 
 ## Requirements
 
@@ -46,6 +45,7 @@ This extension contributes the following settings:
 ## Known Issues
 
 - Lots of missing features, but it seems to be working on OSX and Windows 10 now at least.
+- Language server has no support for KickAss 3.x (only 4.x and 5.x).
 
 ## How to contribute
 
@@ -79,6 +79,10 @@ Running the extension locally:
 Read more about extension development [here](https://code.visualstudio.com/docs/extensions/overview).
 
 ## Release Notes
+
+### 1.3.0
+
+Language server that displays errors in source files
 
 ### 1.2.1
 

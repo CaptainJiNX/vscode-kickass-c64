@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.3.0] - 2018-11-29
+
+### Added
+
+- Language server that displays errors in source files
+
 ## [1.2.1] - 2018-11-27
 
 ### Fixed
