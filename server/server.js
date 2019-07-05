@@ -1,6 +1,6 @@
 const path = require("path");
 const { spawn } = require("child_process");
-const Uri = require("vscode-uri").default;
+const { URI } = require("vscode-uri");
 const {
   createConnection,
   TextDocuments,
@@ -72,7 +72,7 @@ async function validateDocument(document) {
 
 async function getErrors(document) {
   const settings = await getDocumentSettings(document.uri);
-  const fileName = Uri.parse(document.uri).fsPath;
+  const fileName = URI.parse(document.uri).fsPath;
 
   const asmInfo = await new Promise(resolve => {
     let output = "";

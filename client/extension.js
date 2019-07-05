@@ -42,7 +42,7 @@ function activate(context) {
     { scheme: "*", language: "kickassembler" },
     {
       provideHover(document, position) {
-        const word = document.getText(document.getWordRangeAtPosition(position, /[.\:\w\$]+/));
+        const word = document.getText(document.getWordRangeAtPosition(position, /[.:\w$]+/));
         const helpText = helpTexts[word.toLowerCase()];
         if (!helpText) return null;
 
