@@ -80,6 +80,10 @@ Read more about extension development [here](https://code.visualstudio.com/docs/
 
 ## Release Notes
 
+### 1.4.0
+
+Helpfile for all opcodes
+
 ### 1.3.0
 
 Language server that displays errors in source files
