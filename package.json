@@ -117,7 +117,7 @@
         },
         "kickass-c64.c64DebuggerBin": {
           "type": "string",
-          "default": "/Applications/C64Debugger.app/Contents/MacOS/C64Debugger",
+          "default": "/Applications/C64\\ Debugger.app/Contents/MacOS/C64Debugger",
           "description": "Full path to C64 Debugger binary"
         }
       }
