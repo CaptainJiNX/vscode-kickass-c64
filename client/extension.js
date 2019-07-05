@@ -4,6 +4,7 @@ const fs = require("fs");
 const { LanguageClient, TransportKind } = require("vscode-languageclient");
 
 const helpTexts = {
+  ...require("../helpTexts/opcodes"),
   ...require("../helpTexts/illegal-opcodes"),
   ...require("../helpTexts/kickass"),
   ...require("../helpTexts/sid-registers"),
