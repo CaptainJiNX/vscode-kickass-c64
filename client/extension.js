@@ -154,11 +154,12 @@ function activate(context) {
     };
 
     if (debug && config.useC64Debugger) {
-      spawn(
-        config.c64DebuggerBin,
-        ["-autojmp", "-prg", outputFile, "-breakpoints", getBreakpointsFile(outputFile)],
-        spawnOptions
-      );
+      let startArgs = getC64DebuggerStartArgs(config, outputFile);
+      let c64DebuggerProcess = spawn(config.c64DebuggerBin, startArgs, spawnOptions);
+      let spawnStartArgs = c64DebuggerProcess.spawnargs.filter(arg => arg.includes("C64Debugger.exe"))[0];
+      if (spawnStartArgs) {
+        output.appendLine(`C64Debugger start args: ${spawnStartArgs}`);
+      }
     } else {
       const logfile = `${path.basename(outputFile)}-vice.log`;
       const args = ["-logfile", logfile];
@@ -181,6 +182,33 @@ function activate(context) {
 
   function getConfig() {
     return vscode.workspace.getConfiguration("kickass-c64");
+  }
+
+  function getC64DebuggerStartArgs(config, outputFile) {
+    const staticStartArgs = ["-prg", outputFile, "-breakpoints", getBreakpointsFile(outputFile)];
+    let configurableStartArgs = [];
+    let configuredC64HexMemAddressIsValid = validC64HexMemAddress(config.useC64DebuggerStartAddress);
+    if (config.useC64DebuggerStartAddress && configuredC64HexMemAddressIsValid) {
+      configurableStartArgs.push("-jmp");
+      configurableStartArgs.push(config.useC64DebuggerStartAddress);
+    } else {
+      configurableStartArgs.push("-autojmp");
+      if (!configuredC64HexMemAddressIsValid)
+        output.appendLine(
+          `C64DebuggerStartAddress '${config.useC64DebuggerStartAddress}' is not within valid range (x0000 - xFFFF). Configured value ignored, using -autojmp.`
+        );
+    }
+    return configurableStartArgs.concat(staticStartArgs);
+  }
+
+  function validC64HexMemAddress(startAddress) {
+    if (!startAddress.startsWith("x")) return false;
+    let hexAddressValue = startAddress.split("x")[1];
+    if (!hexAddressValue) return false;
+    const decimalAdressValue = parseInt(hexAddressValue, 16).toString(10);
+    if (!(decimalAdressValue >= 0 && decimalAdressValue <= 65535)) return false;
+
+    return true;
   }
 }
 
