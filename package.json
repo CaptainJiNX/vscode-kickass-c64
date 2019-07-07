@@ -125,8 +125,8 @@
     "keybindings": [
       {
         "command": "kickass-c64.build",
-        "key": "win+b",
-        "mac": "cmd+b",
+        "key": "shift+ctrl+b",
+        "mac": "shift+cmd+b",
         "when": "editorLangId == kickassembler"
       },
       {
