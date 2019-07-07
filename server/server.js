@@ -1,3 +1,5 @@
+"use strict";
+
 const path = require("path");
 const { spawn } = require("child_process");
 const { URI } = require("vscode-uri");

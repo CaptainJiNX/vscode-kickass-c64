@@ -1,3 +1,5 @@
+"use strict";
+
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
@@ -98,7 +100,7 @@ function activate(context) {
 
     const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
     const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
-    let process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
+    const process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
     output.append(process.stdout.toString());
 
     let outputFile;
@@ -138,7 +140,7 @@ function activate(context) {
 
     const breakpointsFile = path.join(outputDir, getBreakpointsFile(outputFile));
 
-    fs.writeFileSync(breakpointsFile, breakpoints.join("\n") + "\n");
+    fs.writeFileSync(breakpointsFile, `${breakpoints.join("\n")}\n`);
     output.appendLine(`Wrote breakpoints to ${breakpointsFile}`);
   }
 
