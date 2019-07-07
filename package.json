@@ -152,6 +152,8 @@
     "prettier": "^1.18.2"
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "arrowParens": "always",
+    "trailingComma": "es5"
   }
 }

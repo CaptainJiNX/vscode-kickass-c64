@@ -7,7 +7,7 @@ const {
   DiagnosticSeverity,
   ProposedFeatures,
   DidChangeConfigurationNotification,
-  Position
+  Position,
 } = require("vscode-languageserver");
 const kickassRunnerJar = path.join(__dirname, "KickAssRunner.jar");
 
@@ -25,8 +25,8 @@ connection.onInitialize(({ capabilities }) => {
 
   return {
     capabilities: {
-      textDocumentSync: documents.syncKind
-    }
+      textDocumentSync: documents.syncKind,
+    },
   };
 });
 
@@ -36,11 +36,11 @@ connection.onInitialized(() => {
   }
 });
 
-documents.onDidChangeContent(change => {
+documents.onDidChangeContent((change) => {
   validateDocument(change.document);
 });
 
-connection.onDidChangeConfiguration(change => {
+connection.onDidChangeConfiguration((change) => {
   if (hasConfigurationCapability) {
     documentSettings.clear();
   } else {
@@ -74,7 +74,7 @@ async function getErrors(document) {
   const settings = await getDocumentSettings(document.uri);
   const fileName = URI.parse(document.uri).fsPath;
 
-  const asmInfo = await new Promise(resolve => {
+  const asmInfo = await new Promise((resolve) => {
     let output = "";
 
     const proc = spawn(
@@ -87,12 +87,12 @@ async function getErrors(document) {
         "-asminfo",
         "errors",
         "-asminfo",
-        "files"
+        "files",
       ],
       { cwd: path.dirname(fileName) }
     );
 
-    proc.stdout.on("data", data => {
+    proc.stdout.on("data", (data) => {
       output += data;
     });
 
@@ -112,7 +112,7 @@ async function getErrors(document) {
   const currentFileNumber = filesPart
     .split("\n")
     .slice(1)
-    .map(line => {
+    .map((line) => {
       const [number, file] = line.split(";");
       return { number, file };
     })
@@ -138,7 +138,7 @@ async function getErrors(document) {
       startPos,
       endRow,
       endPos,
-      fileNumber
+      fileNumber,
     };
   }
 
@@ -148,10 +148,10 @@ async function getErrors(document) {
       severity: DiagnosticSeverity.Error,
       range: {
         start: Position.create(startRow - 1, startPos - 1),
-        end: Position.create(endRow - 1, endPos)
+        end: Position.create(endRow - 1, endPos),
       },
       message,
-      source: "kickass-c64"
+      source: "kickass-c64",
     };
   }
 }

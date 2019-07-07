@@ -59,13 +59,13 @@ function generate() {
     ["PHP", "(PusH Processor status)"],
     ["PLP", "(PuLl Processor status)"],
     ["STX", "(STore X register)"],
-    ["STY", "(STore Y register)"]
+    ["STY", "(STore Y register)"],
   ];
 
   return codes.reduce((acc, code) => {
     acc[code[0].toLowerCase()] = {
       name: getName(code),
-      descr: getDescr(code)
+      descr: getDescr(code),
     };
     return acc;
   }, {});

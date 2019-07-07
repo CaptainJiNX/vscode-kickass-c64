@@ -8,7 +8,7 @@ const helpTexts = {
   ...require("../helpTexts/illegal-opcodes"),
   ...require("../helpTexts/kickass"),
   ...require("../helpTexts/sid-registers"),
-  ...require("../helpTexts/vic-registers")
+  ...require("../helpTexts/vic-registers"),
 };
 
 const { spawn, spawnSync } = require("child_process");
@@ -18,22 +18,22 @@ function activate(context) {
 
   const server = {
     module: context.asAbsolutePath(path.join("server", "server.js")),
-    transport: TransportKind.ipc
+    transport: TransportKind.ipc,
   };
 
   const serverOptions = {
     run: server,
     debug: {
       ...server,
-      options: { execArgv: ["--nolazy", "--inspect=6009"] }
-    }
+      options: { execArgv: ["--nolazy", "--inspect=6009"] },
+    },
   };
 
   const clientOptions = {
     documentSelector: [{ scheme: "file", language: "kickassembler" }],
     synchronize: {
-      fileEvents: vscode.workspace.createFileSystemWatcher("**/.clientrc")
-    }
+      fileEvents: vscode.workspace.createFileSystemWatcher("**/.clientrc"),
+    },
   };
 
   const client = new LanguageClient("kickAss", "KickAss Language Server", serverOptions, clientOptions);
@@ -51,7 +51,7 @@ function activate(context) {
         markdown.appendCodeblock(helpText.name, "kickassembler");
         markdown.appendMarkdown(helpText.descr);
         return new vscode.Hover(markdown);
-      }
+      },
     }
   );
 
@@ -61,17 +61,17 @@ function activate(context) {
     "kickass-c64.build-debug": () => run(compile({ debug: true })),
     "kickass-c64.build-startup": () => compile({ useStartUp: true }),
     "kickass-c64.build-run-startup": () => run(compile({ useStartUp: true })),
-    "kickass-c64.build-debug-startup": () => run(compile({ debug: true, useStartUp: true }))
+    "kickass-c64.build-debug-startup": () => run(compile({ debug: true, useStartUp: true })),
   };
 
   const toCommand = ([command, callback]) => vscode.commands.registerCommand(command, callback);
   Object.entries(commands)
     .map(toCommand)
-    .forEach(command => context.subscriptions.push(command));
+    .forEach((command) => context.subscriptions.push(command));
 
   function findStartUp(file) {
     const fileDir = path.dirname(file);
-    const startUp = fs.readdirSync(fileDir).find(fileName => /^startup\..*$/i.test(fileName));
+    const startUp = fs.readdirSync(fileDir).find((fileName) => /^startup\..*$/i.test(fileName));
 
     if (startUp) {
       return path.join(fileDir, startUp);
@@ -116,7 +116,7 @@ function activate(context) {
     return {
       outputFile,
       outputDir,
-      debug
+      debug,
     };
   }
 
@@ -129,7 +129,7 @@ function activate(context) {
     const breakpoints = fs
       .readFileSync(viceSymbols, { encoding: "utf8" })
       .split("\n")
-      .filter(x => x.startsWith("break"));
+      .filter((x) => x.startsWith("break"));
 
     if (breakpoints.length === 0) {
       output.appendLine("No breakpoints found, skipping.");
@@ -150,7 +150,7 @@ function activate(context) {
       cwd: outputDir,
       detached: true,
       stdio: "inherit",
-      shell: true
+      shell: true,
     };
 
     if (debug && config.useC64Debugger) {
