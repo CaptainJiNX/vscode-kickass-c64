@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+- Keybindings for build, run and debug
+
 ## [1.4.0] - 2019-07-05
 
 ### Added
