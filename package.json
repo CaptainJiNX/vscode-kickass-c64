@@ -115,6 +115,11 @@
           "default": true,
           "description": "Debug with C64 Debugger"
         },
+        "kickass-c64.useC64DebuggerStartAddress": {
+          "type": "string",
+          "default": "",
+          "description": "An explicit hex address that C64Debugger will jump to when started.\nC64Debugger will use -autojmp when the C64DebuggerStartAddress is empty.\nSample value: x4000"
+        },
         "kickass-c64.c64DebuggerBin": {
           "type": "string",
           "default": "/Applications/C64\\ Debugger.app/Contents/MacOS/C64Debugger",
