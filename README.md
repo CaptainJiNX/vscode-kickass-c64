@@ -76,7 +76,7 @@ Running the extension locally:
 - Relaunch the extension from the debug toolbar after making changes to the files listed above.
 - You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window load your changes.
 
-Read more about extension development [here](https://code.visualstudio.com/docs/extensions/overview).
+Read more about extension development [here](https://code.visualstudio.com/api).
 
 ## Release Notes
 
