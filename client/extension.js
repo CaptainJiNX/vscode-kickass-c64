@@ -3,34 +3,14 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
-const { LanguageClient, TransportKind } = require("vscode-languageclient");
 
 const { spawn, spawnSync } = require("./process");
 const output = require("./output");
 const hoverProvider = require("./helpTexts/hoverProvider");
+const languageClient = require("./languageClient");
 
 function activate(context) {
-  const server = {
-    module: context.asAbsolutePath(path.join("server", "server.js")),
-    transport: TransportKind.ipc,
-  };
-
-  const serverOptions = {
-    run: server,
-    debug: {
-      ...server,
-      options: { execArgv: ["--nolazy", "--inspect=6009"] },
-    },
-  };
-
-  const clientOptions = {
-    documentSelector: [{ scheme: "file", language: "kickassembler" }],
-    synchronize: {
-      fileEvents: vscode.workspace.createFileSystemWatcher("**/.clientrc"),
-    },
-  };
-
-  const client = new LanguageClient("kickAss", "KickAss Language Server", serverOptions, clientOptions);
+  const client = languageClient.create(context);
   client.start();
 
   vscode.languages.registerHoverProvider({ scheme: "*", language: "kickassembler" }, hoverProvider);
