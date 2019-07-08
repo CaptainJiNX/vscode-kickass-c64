@@ -13,7 +13,7 @@ const helpTexts = {
   ...require("../helpTexts/vic-registers"),
 };
 
-const { spawn, spawnSync } = require("child_process");
+const { spawn, spawnSync } = require("./process");
 const output = require("./output");
 
 function activate(context) {
@@ -99,7 +99,7 @@ function activate(context) {
 
     const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
     const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
-    const process = _spawn(spawnSync, config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
+    const process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
     output.append(process.stdout.toString());
 
     let outputFile;
@@ -155,8 +155,7 @@ function activate(context) {
     };
 
     if (debug && config.useC64Debugger) {
-      _spawn(
-        spawn,
+      spawn(
         config.c64DebuggerBin,
         ["-autojmp", "-prg", outputFile, "-breakpoints", getBreakpointsFile(outputFile)],
         spawnOptions
@@ -165,7 +164,7 @@ function activate(context) {
       const logfile = `${path.basename(outputFile)}-vice.log`;
       const args = ["-logfile", logfile];
       const debugArgs = debug ? ["-moncommands", getViceSymbolsFile(outputFile)] : [];
-      _spawn(spawn, config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
+      spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
     }
   }
 
@@ -183,12 +182,6 @@ function activate(context) {
 
   function getConfig() {
     return vscode.workspace.getConfiguration("kickass-c64");
-  }
-
-  function _spawn(fn, command, args, options) {
-    output.append(`\nChild process ${fn.name}: `);
-    output.append(`${command} ${args.join(" ")}\n\n`);
-    return fn(command, args, options);
   }
 }
 
