@@ -14,10 +14,9 @@ const helpTexts = {
 };
 
 const { spawn, spawnSync } = require("child_process");
+const output = require("./output");
 
 function activate(context) {
-  const output = vscode.window.createOutputChannel("Kick Assembler (C64)");
-
   const server = {
     module: context.asAbsolutePath(path.join("server", "server.js")),
     transport: TransportKind.ipc,
