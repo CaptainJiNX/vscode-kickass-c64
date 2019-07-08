@@ -5,16 +5,9 @@ const path = require("path");
 const fs = require("fs");
 const { LanguageClient, TransportKind } = require("vscode-languageclient");
 
-const helpTexts = {
-  ...require("../helpTexts/opcodes"),
-  ...require("../helpTexts/illegal-opcodes"),
-  ...require("../helpTexts/kickass"),
-  ...require("../helpTexts/sid-registers"),
-  ...require("../helpTexts/vic-registers"),
-};
-
 const { spawn, spawnSync } = require("./process");
 const output = require("./output");
+const hoverProvider = require("./helpTexts/hoverProvider");
 
 function activate(context) {
   const server = {
@@ -40,21 +33,7 @@ function activate(context) {
   const client = new LanguageClient("kickAss", "KickAss Language Server", serverOptions, clientOptions);
   client.start();
 
-  vscode.languages.registerHoverProvider(
-    { scheme: "*", language: "kickassembler" },
-    {
-      provideHover(document, position) {
-        const word = document.getText(document.getWordRangeAtPosition(position, /[.:\w$]+/));
-        const helpText = helpTexts[word.toLowerCase()];
-        if (!helpText) return null;
-
-        const markdown = new vscode.MarkdownString();
-        markdown.appendCodeblock(helpText.name, "kickassembler");
-        markdown.appendMarkdown(helpText.descr);
-        return new vscode.Hover(markdown);
-      },
-    }
-  );
+  vscode.languages.registerHoverProvider({ scheme: "*", language: "kickassembler" }, hoverProvider);
 
   const commands = {
     "kickass-c64.build": () => compile(),
