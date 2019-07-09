@@ -15,20 +15,11 @@ module.exports = function run({ outputFile, outputDir, debug }) {
     shell: true,
   };
 
-  if (debug && config.useC64Debugger) {
-    spawn(
-      config.c64DebuggerBin,
-      [
-        "-layout 10",
-        "-debuginfo",
-        replaceFileExtension(outputFile, ".dbg"),
-        "-wait 2500",
-        "-prg",
-        outputFile,
-        "-autojmp",
-      ],
-      spawnOptions
-    );
+  if (config.useC64Debugger) {
+    const layoutArg = `-layout ${debug ? "10" : "1"}`;
+    const args = ["-wait 2500", "-prg", outputFile, "-autojmp"];
+    const debugArgs = debug ? ["-debuginfo", replaceFileExtension(outputFile, ".dbg")] : [];
+    spawn(config.c64DebuggerBin, [layoutArg, ...debugArgs, ...args], spawnOptions);
   } else {
     const logfile = `${path.basename(outputFile)}-vice.log`;
     const args = ["-logfile", logfile];
