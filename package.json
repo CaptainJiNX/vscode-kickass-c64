@@ -119,6 +119,11 @@
           "type": "string",
           "default": "/Applications/C64\\ Debugger.app/Contents/MacOS/C64Debugger",
           "description": "Full path to C64 Debugger binary"
+        },
+        "kickass-c64.emptyBinFolderBeforeBuild": {
+          "type": "boolean",
+          "default": true,
+          "description": "Empty bin folder before build"
         }
       }
     },

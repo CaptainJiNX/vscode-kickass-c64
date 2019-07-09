@@ -23,6 +23,10 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
     fs.mkdirSync(outputDir);
   }
 
+  if (config.emptyBinFolderBeforeBuild) {
+    fs.readdirSync(outputDir).map((file) => fs.unlinkSync(path.join(outputDir, file)));
+  }
+
   output.appendLine(`Compiling ${fileToCompile}`);
 
   const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];

@@ -8,6 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Keybindings for build, run and debug
 - Removed generation of .breakpoints file
+- Empties bin folder before build as default
 
 ## [1.4.0] - 2019-07-05
 
