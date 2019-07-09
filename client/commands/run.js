@@ -18,7 +18,15 @@ module.exports = function run({ outputFile, outputDir, debug }) {
   if (debug && config.useC64Debugger) {
     spawn(
       config.c64DebuggerBin,
-      ["-autojmp", "-prg", outputFile, "-breakpoints", replaceFileExtension(outputFile, ".breakpoints")],
+      [
+        "-layout 10",
+        "-debuginfo",
+        replaceFileExtension(outputFile, ".dbg"),
+        "-wait 2500",
+        "-prg",
+        outputFile,
+        "-autojmp",
+      ],
       spawnOptions
     );
   } else {

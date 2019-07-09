@@ -7,6 +7,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [Unreleased]
 
 - Keybindings for build, run and debug
+- Removed generation of .breakpoints file
 
 ## [1.4.0] - 2019-07-05
 

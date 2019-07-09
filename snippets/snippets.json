@@ -5,18 +5,6 @@
     "description": "6502 assembler subroutine",
     "scope": "source.assembly.kickassembler"
   },
-  "brsc": {
-    "prefix": "brsc",
-    "body": "\n//----------------------------------------------------------\n// Code for creating the breakpoint file sent to Vice.\n//----------------------------------------------------------\n.var _useBinFolderForBreakpoints = cmdLineVars.get(\"usebin\") == \"true\"\n.var _createDebugFiles = cmdLineVars.get(\"afo\") == \"true\"\n.print \"File creation \" + [_createDebugFiles\n ? \"enabled (creating breakpoint file)\"\n : \"disabled (no breakpoint file created)\"]\n.var brkFile\n.if(_createDebugFiles) {\n .if(_useBinFolderForBreakpoints)\n .eval brkFile = createFile(\"bin/${2:breakpoints.txt}\")\n else\n .eval brkFile = createFile(\"${2:breakpoints.txt}\")\n}\n.macro break() {\n.if(_createDebugFiles) {\n .eval brkFile.writeln(\"break \" + toHexString(*))\n }\n}\n//------------------------------------------------------\n",
-    "description": "Kick Assembler break file script",
-    "scope": "source.assembly.kickassembler"
-  },
-  "bp": {
-    "prefix": "bp",
-    "body": "\r\n:break()\r\n",
-    "description": "Kick Assembler breakpoint",
-    "scope": "source.assembly.kickassembler"
-  },
   "cos": {
     "prefix": "cos",
     "body": "\r\n*=${1:\\$ADDR} \"${2:Cosinus}\"\r\n.fill ${3:LENGTH}, ${4:AMPLITUDE} + ${5:$4}*cos(toRadians(i*360/${6:SIZE}))\r\n\r\n",
