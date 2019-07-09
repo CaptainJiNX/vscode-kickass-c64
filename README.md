@@ -80,6 +80,14 @@ Read more about extension development [here](https://code.visualstudio.com/api).
 
 ## Release Notes
 
+### 1.5.0
+
+Keybindings for build, run and debug
+Removed generation of .breakpoints file
+Empties bin folder before build as default
+Support for both running and debugging with C64 debugger
+Support for build annotations "Swoffa style"
+
 ### 1.4.0
 
 Helpfile for all opcodes

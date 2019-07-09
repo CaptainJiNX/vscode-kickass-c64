@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.5.0] - 2019-07-09
+
+### Added
+
 - Keybindings for build, run and debug
 - Removed generation of .breakpoints file
 - Empties bin folder before build as default
