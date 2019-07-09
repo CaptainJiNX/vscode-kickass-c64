@@ -10,6 +10,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Removed generation of .breakpoints file
 - Empties bin folder before build as default
 - Support for both running and debugging with C64 debugger
+- Support for build annotations "Swoffa style"
 
 ## [1.4.0] - 2019-07-05
 

@@ -15,6 +15,7 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   const outDir = "bin";
   const currentFile = vscode.window.activeTextEditor.document.fileName;
   const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
+  const defaultOutputFile = replaceFileExtension(fileToCompile, ".prg");
   const workDir = path.dirname(fileToCompile);
   const outputDir = path.join(workDir, outDir);
   const buildLog = path.join(outputDir, "buildlog.txt");
@@ -29,7 +30,7 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
 
   output.appendLine(`Compiling ${fileToCompile}`);
 
-  const debugArgs = debug ? ["-debugdump", "-vicesymbols"] : [];
+  const debugArgs = debug ? [config.useC64Debugger ? "-debugdump" : "-vicesymbols"] : [];
   const args = ["-jar", config.kickAssJar, "-odir", outDir, "-log", buildLog, "-showmem"];
   const process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
   output.append(process.stdout.toString());
@@ -37,7 +38,8 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   let outputFile;
 
   if (process.status === 0) {
-    outputFile = replaceFileExtension(fileToCompile, ".prg");
+    const buildAnnotations = parseBuildAnnotations(fileToCompile);
+    outputFile = buildAnnotations["file-to-run"] || defaultOutputFile;
   } else {
     vscode.window.showErrorMessage("Compilation failed with errors.");
     output.append(process.stderr.toString());
@@ -57,4 +59,22 @@ function findStartUp(file) {
   if (startUp) {
     return path.join(fileDir, startUp);
   }
+}
+
+function parseBuildAnnotations(file) {
+  const regex = /^\s*\/\/\s*@kickass-build\s*"([^"]*)"\s*:\s*"([^"]*)"/gm;
+  const content = fs.readFileSync(file);
+  const annotations = {};
+
+  let m;
+  while ((m = regex.exec(content)) !== null) {
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+
+    annotations[m[1]] = m[2];
+    output.appendLine(`Found build annotation (${m[1]}: ${m[2]})`);
+  }
+
+  return annotations;
 }
