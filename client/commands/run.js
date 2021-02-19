@@ -24,6 +24,7 @@ module.exports = function run({ outputFile, outputDir, debug }) {
     const logfile = `${path.basename(outputFile)}-vice.log`;
     const args = ["-logfile", logfile];
     const debugArgs = debug ? ["-moncommands", replaceFileExtension(outputFile, ".vs")] : [];
-    spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
+    outputDir += '/' + outputFile
+    spawn(config.viceBin, [...args, ...debugArgs, outputDir], spawnOptions);
   }
 };
