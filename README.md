@@ -80,6 +80,10 @@ Read more about extension development [here](https://code.visualstudio.com/api).
 
 ## Release Notes
 
+### 1.5.1
+
+Use full paths for arguments to Vice
+
 ### 1.5.0
 
 Keybindings for build, run and debug

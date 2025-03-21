@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.5.1] - 2025-03-21
+
+### Fixed
+
+- Use full paths for arguments to Vice
+
 ## [1.5.0] - 2019-07-09
 
 ### Added
