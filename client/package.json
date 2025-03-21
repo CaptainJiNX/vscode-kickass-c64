@@ -6,12 +6,9 @@
   },
   "license": "MIT",
   "engines": {
-    "vscode": "^1.28.0"
+    "vscode": "^1.78.0"
   },
-  "scripts": {
-    "update-vscode": "vscode-install",
-    "postinstall": "vscode-install"
-  },
+  "scripts": {},
   "devDependencies": {
     "vscode": "^1.1.36"
   },
