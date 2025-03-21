@@ -21,9 +21,10 @@ module.exports = function run({ outputFile, outputDir, debug }) {
     const debugArgs = debug ? ["-debuginfo", replaceFileExtension(outputFile, ".dbg")] : [];
     spawn(config.c64DebuggerBin, [layoutArg, ...debugArgs, ...args], spawnOptions);
   } else {
-    const logfile = `${path.basename(outputFile)}-vice.log`;
+    const logfile = path.join(outputDir, `${path.basename(outputFile)}-vice.log`);
     const args = ["-logfile", logfile];
-    const debugArgs = debug ? ["-moncommands", replaceFileExtension(outputFile, ".vs")] : [];
-    spawn(config.viceBin, [...args, ...debugArgs, outputFile], spawnOptions);
+    const debugArgs = debug ? ["-moncommands", path.join(outputDir, replaceFileExtension(outputFile, ".vs"))] : [];
+    const fullOutputFile = path.join(outputDir, outputFile);
+    spawn(config.viceBin, [...args, ...debugArgs, fullOutputFile], spawnOptions);
   }
 };
