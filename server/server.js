@@ -41,9 +41,8 @@ connection.onInitialized(() => {
 
 documents.onDidClose((e) => {
   const fileName = URI.parse(e.document.uri).fsPath;
-  const { tempDoumentPath, tempDoumentAsmInfoPath } = getDocumentTempFilePaths(fileName);
+  const tempDoumentPath = getDocumentTempFilePath(fileName);
   fs.unlink(tempDoumentPath, () => {});
-  fs.unlink(tempDoumentAsmInfoPath, () => {});
 });
 
 documents.onDidChangeContent((change) => {
@@ -80,24 +79,21 @@ async function validateDocument(document) {
   connection.sendDiagnostics({ uri: document.uri, diagnostics: errors || [] });
 }
 
-function getDocumentTempFilePaths(fileName) {
+function getDocumentTempFilePath(fileName) {
   const safeFileName = fileName.replace(/[/\\:]/g, "_"); // Make filename safe
-  const tempDoumentAsmInfoPath = path.join(os.tmpdir(), `vscode-kickass-${safeFileName}-asminfo.tmp`);
-  const tempDoumentPath = path.join(os.tmpdir(), `vscode-kickass-${safeFileName}.tmp`);
-  return {
-    tempDoumentPath,
-    tempDoumentAsmInfoPath
-  };
+  return path.join(os.tmpdir(), `vscode-kickass-${safeFileName}.tmp`);
 }
 
 async function getErrors(document) {
   const settings = await getDocumentSettings(document.uri);
   const fileName = URI.parse(document.uri).fsPath;
 
-  const { tempDoumentPath, tempDoumentAsmInfoPath } = getDocumentTempFilePaths(fileName);
+  const tempDoumentPath = getDocumentTempFilePath(fileName);
   fs.writeFileSync(tempDoumentPath, document.getText(), "utf8");
 
   const asmInfo = await new Promise((resolve) => {
+    let output = "";
+
     const proc = spawn(
       settings.javaBin,
       [
@@ -109,17 +105,19 @@ async function getErrors(document) {
         "errors",
         "-asminfo",
         "files",
-        "-asminfofile",
-        tempDoumentAsmInfoPath,
         "-replacefile",
         fileName,
         tempDoumentPath,
+        "-asminfotostdout",
       ],
       { cwd: path.dirname(fileName) }
     );
 
+    proc.stdout.on("data", (data) => {
+      output += data;
+    });
+
     proc.on("close", () => {
-      const output = fs.readFileSync(tempDoumentAsmInfoPath, "utf8");
       resolve(output);
     });
   });
