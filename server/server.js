@@ -41,8 +41,8 @@ connection.onInitialized(() => {
 
 documents.onDidClose((e) => {
   const fileName = URI.parse(e.document.uri).fsPath;
-  const tempDoumentPath = getDocumentTempFilePath(fileName);
-  fs.unlink(tempDoumentPath, () => {});
+  const documentTempFilePath = getDocumentTempFilePath(fileName);
+  fs.unlink(documentTempFilePath, () => {});
 });
 
 documents.onDidChangeContent((change) => {
@@ -88,8 +88,8 @@ async function getKickAssembler5AsmInfo(document) {
   const settings = await getDocumentSettings(document.uri);
   const fileName = URI.parse(document.uri).fsPath;
 
-  const tempDoumentPath = getDocumentTempFilePath(fileName);
-  fs.writeFileSync(tempDoumentPath, document.getText(), "utf8");
+  const documentTempFilePath = getDocumentTempFilePath(fileName);
+  fs.writeFileSync(documentTempFilePath, document.getText(), "utf8");
 
   return new Promise((resolve) => {
     let output = "";
@@ -107,7 +107,7 @@ async function getKickAssembler5AsmInfo(document) {
         "files",
         "-replacefile",
         fileName,
-        tempDoumentPath,
+        documentTempFilePath,
         "-asminfotostdout",
         "-nooutput",
       ],
