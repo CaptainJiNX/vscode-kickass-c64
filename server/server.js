@@ -109,6 +109,7 @@ async function getErrors(document) {
         fileName,
         tempDoumentPath,
         "-asminfotostdout",
+        "-nooutput",
       ],
       { cwd: path.dirname(fileName) }
     );
