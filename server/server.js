@@ -124,9 +124,49 @@ async function getKickAssembler5AsmInfo(document) {
   });
 }
 
+async function getKickAssembler4AsmInfo(document) {
+  const kickassRunnerJar = path.join(__dirname, "KickAssRunner.jar");
+  const settings = await getDocumentSettings(document.uri);
+  const fileName = URI.parse(document.uri).fsPath;
+
+  return await new Promise((resolve) => {
+    let output = "";
+
+    const proc = spawn(
+      settings.javaBin,
+      [
+        "-cp",
+        `${settings.kickAssJar}:${kickassRunnerJar}`,
+        "com.noice.kickass.KickAssRunner",
+        fileName,
+        "-asminfo",
+        "errors",
+        "-asminfo",
+        "files",
+      ],
+      { cwd: path.dirname(fileName) }
+    );
+
+    proc.stdout.on("data", (data) => {
+      output += data;
+    });
+
+    proc.on("close", () => {
+      resolve(output);
+    });
+
+    proc.stdin.write(document.getText());
+    proc.stdin.end();
+  });
+}
+
 async function getErrors(document) {
   const fileName = URI.parse(document.uri).fsPath;
-  const asmInfo = await getKickAssembler5AsmInfo(document);
+
+  let asmInfo = await getKickAssembler5AsmInfo(document);
+  if (!asmInfo.includes("[files]")) {
+    asmInfo = await getKickAssembler4AsmInfo(document);
+  }
 
   const filesIndex = asmInfo.indexOf("[files]");
   const errorsIndex = asmInfo.indexOf("[errors]");
