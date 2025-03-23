@@ -84,14 +84,14 @@ function getDocumentTempFilePath(fileName) {
   return path.join(os.tmpdir(), `vscode-kickass-${safeFileName}.tmp`);
 }
 
-async function getErrors(document) {
+async function getKickAssembler5AsmInfo(document) {
   const settings = await getDocumentSettings(document.uri);
   const fileName = URI.parse(document.uri).fsPath;
 
   const tempDoumentPath = getDocumentTempFilePath(fileName);
   fs.writeFileSync(tempDoumentPath, document.getText(), "utf8");
 
-  const asmInfo = await new Promise((resolve) => {
+  return new Promise((resolve) => {
     let output = "";
 
     const proc = spawn(
@@ -122,6 +122,11 @@ async function getErrors(document) {
       resolve(output);
     });
   });
+}
+
+async function getErrors(document) {
+  const fileName = URI.parse(document.uri).fsPath;
+  const asmInfo = await getKickAssembler5AsmInfo(document);
 
   const filesIndex = asmInfo.indexOf("[files]");
   const errorsIndex = asmInfo.indexOf("[errors]");
