@@ -112,7 +112,7 @@
         },
         "kickass-c64.useC64Debugger": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Debug and run with C64 Debugger"
         },
         "kickass-c64.c64DebuggerBin": {
