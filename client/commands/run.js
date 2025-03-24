@@ -15,7 +15,7 @@ module.exports = function run({ outputFile, outputDir, debug }) {
     shell: true,
   };
 
-  if (config.useC64Debugger) {
+  if ((debug && config.debugWithC64Debugger) || (!debug && config.runWithC64Debugger)) {
     const layoutArg = `-layout ${debug ? "10" : "1"}`;
     const args = ["-wait 2500", "-prg", outputFile, "-autojmp"];
     const debugArgs = debug ? ["-debuginfo", replaceFileExtension(outputFile, ".dbg")] : [];

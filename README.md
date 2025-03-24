@@ -39,8 +39,9 @@ This extension contributes the following settings:
 - `kickass-c64.kickAssJar`: Full path to KickAss.jar
 - `kickass-c64.javaBin`: Full path to java binary
 - `kickass-c64.viceBin`: Full path to VICE binary
-- `kickass-c64.useC64Debugger`: Debug with C64 Debugger
 - `kickass-c64.c64DebuggerBin`: Full path to C64 Debugger binary
+- `kickass-c64.runWithC64Debugger`: Run with C64 Debugger
+- `kickass-c64.debugWithC64Debugger`: Debug with C64 Debugger
 
 ## Known Issues
 

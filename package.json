@@ -110,15 +110,20 @@
           "default": "x64",
           "description": "Full path to VICE binary"
         },
-        "kickass-c64.useC64Debugger": {
-          "type": "boolean",
-          "default": false,
-          "description": "Debug and run with C64 Debugger"
-        },
         "kickass-c64.c64DebuggerBin": {
           "type": "string",
           "default": "/Applications/C64\\ Debugger.app/Contents/MacOS/C64Debugger",
           "description": "Full path to C64 Debugger binary"
+        },
+        "kickass-c64.runWithC64Debugger": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run with C64 Debugger"
+        },
+        "kickass-c64.debugWithC64Debugger": {
+          "type": "boolean",
+          "default": false,
+          "description": "Debug with C64 Debugger"
         },
         "kickass-c64.emptyBinFolderBeforeBuild": {
           "type": "boolean",
