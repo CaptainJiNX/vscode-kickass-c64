@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+- Use KickAssembler for language server, instead of special KickAssRunner
+- Added separate options for running and debugging with C64 Debugger (also set to false by default)
+- Use original filename for vice vs file
+- Remove output dir with rmdirSync instead of unlink
+
 ## [1.5.1] - 2025-03-21
 
 ### Fixed
