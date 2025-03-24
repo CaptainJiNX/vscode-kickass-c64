@@ -46,6 +46,7 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   }
 
   return {
+    fileToCompile,
     outputFile,
     outputDir,
     debug,
