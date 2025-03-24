@@ -4,7 +4,7 @@ const path = require("path");
 const { spawn } = require("../process");
 const { getConfig, replaceFileExtension } = require("../util");
 
-module.exports = function run({ outputFile, outputDir, debug, defaultOutputFileName }) {
+module.exports = function run({ fileToCompile, outputFile, outputDir, debug }) {
   const config = getConfig();
   if (!outputFile || !outputDir) return;
 
@@ -23,7 +23,7 @@ module.exports = function run({ outputFile, outputDir, debug, defaultOutputFileN
   } else {
     const logfile = path.join(outputDir, `${path.basename(outputFile)}-vice.log`);
     const args = ["-logfile", logfile];
-    const debugArgs = debug ? ["-moncommands", path.join(outputDir, `${defaultOutputFileName}.vs`)] : [];
+    const debugArgs = debug ? ["-moncommands", path.join(outputDir, replaceFileExtension(fileToCompile, ".vs"))] : [];
     const fullOutputFile = path.join(outputDir, outputFile);
     spawn(config.viceBin, [...args, ...debugArgs, fullOutputFile], spawnOptions);
   }

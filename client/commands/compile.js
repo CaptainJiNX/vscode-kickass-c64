@@ -16,7 +16,6 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   const currentFile = vscode.window.activeTextEditor.document.fileName;
   const fileToCompile = (useStartUp && findStartUp(currentFile)) || currentFile;
   const defaultOutputFile = replaceFileExtension(fileToCompile, ".prg");
-  const defaultOutputFileName = replaceFileExtension(fileToCompile, "");
   const workDir = path.dirname(fileToCompile);
   const outputDir = path.join(workDir, outDir);
   const buildLog = path.join(outputDir, "buildlog.txt");
@@ -47,10 +46,10 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   }
 
   return {
+    fileToCompile,
     outputFile,
     outputDir,
     debug,
-    defaultOutputFileName,
   };
 };
 
