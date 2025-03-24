@@ -2,7 +2,7 @@
   "name": "kickass-c64",
   "displayName": "KickAss (C64)",
   "description": "Language support for Kick Assembler (C64). Code like it's 1988!",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "publisher": "CaptainJiNX",
   "icon": "images/icon.png",
   "author": {
