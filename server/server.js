@@ -2,6 +2,8 @@
 
 const path = require("path");
 const { spawn } = require("child_process");
+const os = require("os");
+const fs = require("fs");
 const { URI } = require("vscode-uri");
 const {
   createConnection,
@@ -11,7 +13,6 @@ const {
   DidChangeConfigurationNotification,
   Position,
 } = require("vscode-languageserver");
-const kickassRunnerJar = path.join(__dirname, "KickAssRunner.jar");
 
 const defaultSettings = { kickAssJar: "/Applications/KickAssembler/KickAss.jar", javaBin: "java" };
 let globalSettings = defaultSettings;
@@ -36,6 +37,12 @@ connection.onInitialized(() => {
   if (hasConfigurationCapability) {
     connection.client.register(DidChangeConfigurationNotification.type);
   }
+});
+
+documents.onDidClose((e) => {
+  const fileName = URI.parse(e.document.uri).fsPath;
+  const documentTempFilePath = getDocumentTempFilePath(fileName);
+  fs.unlink(documentTempFilePath, () => {});
 });
 
 documents.onDidChangeContent((change) => {
@@ -72,11 +79,57 @@ async function validateDocument(document) {
   connection.sendDiagnostics({ uri: document.uri, diagnostics: errors || [] });
 }
 
-async function getErrors(document) {
+function getDocumentTempFilePath(fileName) {
+  const safeFileName = fileName.replace(/[/\\:]/g, "_"); // Make filename safe
+  return path.join(os.tmpdir(), `vscode-kickass-${safeFileName}.tmp`);
+}
+
+async function getKickAssembler5AsmInfo(document) {
   const settings = await getDocumentSettings(document.uri);
   const fileName = URI.parse(document.uri).fsPath;
 
-  const asmInfo = await new Promise((resolve) => {
+  const documentTempFilePath = getDocumentTempFilePath(fileName);
+  fs.writeFileSync(documentTempFilePath, document.getText(), "utf8");
+
+  return new Promise((resolve) => {
+    let output = "";
+
+    const proc = spawn(
+      settings.javaBin,
+      [
+        "-jar",
+        `${settings.kickAssJar}`,
+        fileName,
+        "-noeval",
+        "-asminfo",
+        "errors",
+        "-asminfo",
+        "files",
+        "-replacefile",
+        fileName,
+        documentTempFilePath,
+        "-asminfotostdout",
+        "-nooutput",
+      ],
+      { cwd: path.dirname(fileName) }
+    );
+
+    proc.stdout.on("data", (data) => {
+      output += data;
+    });
+
+    proc.on("close", () => {
+      resolve(output);
+    });
+  });
+}
+
+async function getKickAssembler4AsmInfo(document) {
+  const kickassRunnerJar = path.join(__dirname, "KickAssRunner.jar");
+  const settings = await getDocumentSettings(document.uri);
+  const fileName = URI.parse(document.uri).fsPath;
+
+  return await new Promise((resolve) => {
     let output = "";
 
     const proc = spawn(
@@ -105,6 +158,15 @@ async function getErrors(document) {
     proc.stdin.write(document.getText());
     proc.stdin.end();
   });
+}
+
+async function getErrors(document) {
+  const fileName = URI.parse(document.uri).fsPath;
+
+  let asmInfo = await getKickAssembler5AsmInfo(document);
+  if (!asmInfo.includes("[files]")) {
+    asmInfo = await getKickAssembler4AsmInfo(document);
+  }
 
   const filesIndex = asmInfo.indexOf("[files]");
   const errorsIndex = asmInfo.indexOf("[errors]");
