@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.6.1] - 2025-03-24
+
+### Added
+
+- Added missing release notes for 1.6.0
+
 ## [1.6.0] - 2025-03-24
 
 ### Fixed

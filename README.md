@@ -81,12 +81,16 @@ Read more about extension development [here](https://code.visualstudio.com/api).
 
 ## Release Notes
 
+### 1.6.1
+
+Added missing release notes for 1.6.0
+
 ### 1.6.0
 
-- Use KickAssembler for language server, instead of special KickAssRunner
-- Use original filename for vice vs file
-- Remove output dir with rmdirSync instead of unlink
-- Added separate options for running and debugging with C64 Debugger (also set to false by default)
+Use KickAssembler for language server, instead of special KickAssRunner
+Use original filename for vice vs file
+Remove output dir with rmdirSync instead of unlink
+Added separate options for running and debugging with C64 Debugger (also set to false by default)
 
 ### 1.5.1
 
