@@ -20,12 +20,16 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
   const outputDir = path.join(workDir, outDir);
   const buildLog = path.join(outputDir, "buildlog.txt");
 
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
+  if (config.emptyBinFolderBeforeBuild) {
+    try {
+      fs.rmdirSync(outputDir, { force: true, recursive: true, maxRetries: 3 });
+    } catch (error) {
+      output.appendLine(`Error emptying bin folder: ${error.message}`);
+    }
   }
 
-  if (config.emptyBinFolderBeforeBuild) {
-    fs.readdirSync(outputDir).map((file) => fs.unlinkSync(path.join(outputDir, file)));
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
   }
 
   output.appendLine(`Compiling ${fileToCompile}`);
