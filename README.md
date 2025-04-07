@@ -84,66 +84,66 @@ Read more about extension development [here](https://code.visualstudio.com/api).
 
 ### 1.7.1
 
-Fixed classpath delimiter issue.
+- Fixed classpath delimiter issue.
 
 ### 1.7.0
 
 **_This version only seems to have been released to the marketplace, but it was never updated in package.json or tagged in the repo_**
 
-Avoid focusing the output log
-Ensure file tab is active when compiling/running
-Switch to class path (-cp) mode when starting kick assembler
-Add additional class path setting
+- Avoid focusing the output log
+- Ensure file tab is active when compiling/running
+- Switch to class path (-cp) mode when starting kick assembler
+- Add additional class path setting
 
 ### 1.6.1
 
-Added missing release notes for 1.6.0
+- Added missing release notes for 1.6.0
 
 ### 1.6.0
 
-Use KickAssembler for language server, instead of special KickAssRunner
-Use original filename for vice vs file
-Remove output dir with rmdirSync instead of unlink
-Added separate options for running and debugging with C64 Debugger (also set to false by default)
+- Use KickAssembler for language server, instead of special KickAssRunner
+- Use original filename for vice vs file
+- Remove output dir with rmdirSync instead of unlink
+- Added separate options for running and debugging with C64 Debugger (also set to false by default)
 
 ### 1.5.1
 
-Use full paths for arguments to Vice
+- Use full paths for arguments to Vice
 
 ### 1.5.0
 
-Keybindings for build, run and debug
-Removed generation of .breakpoints file
-Empties bin folder before build as default
-Support for both running and debugging with C64 debugger
-Support for build annotations "Swoffa style"
+- Keybindings for build, run and debug
+- Removed generation of .breakpoints file
+- Empties bin folder before build as default
+- Support for both running and debugging with C64 debugger
+- Support for build annotations "Swoffa style"
 
 ### 1.4.0
 
-Helpfile for all opcodes
+- Helpfile for all opcodes
 
 ### 1.3.0
 
-Language server that displays errors in source files
+- Language server that displays errors in source files
 
 ### 1.2.1
 
-Fix for flatmap-stream vulnerability
+- Fix for flatmap-stream vulnerability
 
 ### 1.2.0
 
-Support for some help when hovering over VIC and SID registers, illegal op-codes and preprocessor directives
+- Support for some help when hovering over VIC and SID registers, illegal op-codes and preprocessor directives
 
 ### 1.1.1
 
-Bugfix: compile stopped working if no symbol file existed
+- Bugfix: compile stopped working if no symbol file existed
 
 ### 1.1.0
 
-Added generation of .breakpoint file for debugger
+- Added generation of .breakpoint file for debugger
 
 ### 1.0.0
 
-Initial release of KickAss (C64)
+- Initial release of KickAss (C64)
 
 **Enjoy!**
