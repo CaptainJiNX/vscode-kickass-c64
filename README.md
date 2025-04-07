@@ -42,6 +42,7 @@ This extension contributes the following settings:
 - `kickass-c64.c64DebuggerBin`: Full path to C64 Debugger binary
 - `kickass-c64.runWithC64Debugger`: Run with C64 Debugger
 - `kickass-c64.debugWithC64Debugger`: Debug with C64 Debugger
+- `kickass-c64.kickAssAdditionalClassPath`: Additional java classpath, useful for Kick Assembler plugin jar files
 
 ## Known Issues
 
