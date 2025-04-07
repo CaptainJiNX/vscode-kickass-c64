@@ -97,8 +97,9 @@ async function getKickAssembler5AsmInfo(document) {
     const proc = spawn(
       settings.javaBin,
       [
-        "-jar",
-        `${settings.kickAssJar}`,
+        "-cp",
+        settings.kickAssJar,
+        "kickass.KickAssembler",
         fileName,
         "-noeval",
         "-asminfo",
