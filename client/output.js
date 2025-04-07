@@ -7,7 +7,7 @@ module.exports = {
   append: (value) => output().append(value),
   appendLine: (value) => output().appendLine(value),
   clear: () => output().clear(),
-  show: () => output().show(),
+  show: () => output().show(true),
 };
 
 function output() {
