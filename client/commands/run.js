@@ -1,10 +1,17 @@
 "use strict";
+const vscode = require("vscode");
 const path = require("path");
 
 const { spawn } = require("../process");
 const { getConfig, replaceFileExtension } = require("../util");
 
 module.exports = function run({ fileToCompile, outputFile, outputDir, debug }) {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor || editor.document.uri.scheme !== "file") {
+    vscode.window.showErrorMessage("Please activate a file tab to use this command.");
+    return;
+  }
+
   const config = getConfig();
   if (!outputFile || !outputDir) return;
 
