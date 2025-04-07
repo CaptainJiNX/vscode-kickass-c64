@@ -129,6 +129,11 @@
           "type": "boolean",
           "default": true,
           "description": "Empty bin folder before build"
+        },
+        "kickass-c64.kickAssAdditionalClassPath": {
+          "type": "string",
+          "default": "",
+          "description": "Additional java classpath, useful for Kick Assembler plugin jar files"
         }
       }
     },
