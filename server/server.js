@@ -42,7 +42,7 @@ connection.onInitialized(() => {
 documents.onDidClose((e) => {
   const fileName = URI.parse(e.document.uri).fsPath;
   const documentTempFilePath = getDocumentTempFilePath(fileName);
-  fs.unlink(documentTempFilePath, () => {});
+  fs.unlink(documentTempFilePath, () => { });
 });
 
 documents.onDidChangeContent((change) => {
@@ -94,11 +94,19 @@ async function getKickAssembler5AsmInfo(document) {
   return new Promise((resolve) => {
     let output = "";
 
+    // Use the correct classpath delimiter for the current OS
+    const classpath = [
+      settings.kickAssJar,
+      settings.kickAssAdditionalClassPath
+    ]
+      .filter(Boolean)
+      .join(path.delimiter);
+
     const proc = spawn(
       settings.javaBin,
       [
         "-cp",
-        `${settings.kickAssJar}:${settings.kickAssAdditionalClassPath}`,
+        classpath,
         "kickass.KickAssembler",
         fileName,
         "-noeval",
