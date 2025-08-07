@@ -82,6 +82,19 @@ Read more about extension development [here](https://code.visualstudio.com/api).
 
 ## Release Notes
 
+### 1.7.1
+
+Fixed classpath delimiter issue.
+
+### 1.7.0
+
+**_This version only seems to have been released to the marketplace, but it was never updated in package.json or tagged in the repo_**
+
+Avoid focusing the output log
+Ensure file tab is active when compiling/running
+Switch to class path (-cp) mode when starting kick assembler
+Add additional class path setting
+
 ### 1.6.1
 
 Added missing release notes for 1.6.0

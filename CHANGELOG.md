@@ -6,6 +6,26 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.7.1] - 2025-08-07
+
+### Fixed
+
+- Fixed classpath delimiter issue.
+
+## [1.7.0] - 2025-04-07
+
+**_This version only seems to have been released to the marketplace, but it was never updated in package.json or tagged in the repo_**
+
+### Fixed
+
+- Avoid focusing the output log
+- Ensure file tab is active when compiling/running
+
+### Added
+
+- Switch to class path (-cp) mode when starting kick assembler
+- Add additional class path setting
+
 ## [1.6.1] - 2025-03-24
 
 ### Added
