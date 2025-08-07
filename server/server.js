@@ -42,7 +42,7 @@ connection.onInitialized(() => {
 documents.onDidClose((e) => {
   const fileName = URI.parse(e.document.uri).fsPath;
   const documentTempFilePath = getDocumentTempFilePath(fileName);
-  fs.unlink(documentTempFilePath, () => { });
+  fs.unlink(documentTempFilePath, () => {});
 });
 
 documents.onDidChangeContent((change) => {
