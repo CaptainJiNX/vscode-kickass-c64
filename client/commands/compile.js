@@ -40,23 +40,10 @@ module.exports = function compile({ debug = false, useStartUp = false } = {}) {
 
   output.appendLine(`Compiling ${fileToCompile}`);
 
-  const classpath = [
-    config.kickAssJar,
-    config.kickAssAdditionalClassPath]
-    .filter(Boolean)
-    .join(path.delimiter);
+  const classpath = [config.kickAssJar, config.kickAssAdditionalClassPath].filter(Boolean).join(path.delimiter);
 
   const debugArgs = debug ? [config.debugWithC64Debugger ? "-debugdump" : "-vicesymbols"] : [];
-  const args = [
-    "-cp",
-    classpath,
-    "kickass.KickAssembler",
-    "-odir",
-    outDir,
-    "-log",
-    buildLog,
-    "-showmem",
-  ];
+  const args = ["-cp", classpath, "kickass.KickAssembler", "-odir", outDir, "-log", buildLog, "-showmem"];
   const process = spawnSync(config.javaBin, [...args, ...debugArgs, fileToCompile], { cwd: workDir });
   output.append(process.stdout.toString());
 

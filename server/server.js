@@ -42,7 +42,7 @@ connection.onInitialized(() => {
 documents.onDidClose((e) => {
   const fileName = URI.parse(e.document.uri).fsPath;
   const documentTempFilePath = getDocumentTempFilePath(fileName);
-  fs.unlink(documentTempFilePath, () => { });
+  fs.unlink(documentTempFilePath, () => {});
 });
 
 documents.onDidChangeContent((change) => {
@@ -94,11 +94,7 @@ async function getKickAssembler5AsmInfo(document) {
   return new Promise((resolve) => {
     let output = "";
 
-    const classpath = [
-      settings.kickAssJar,
-      settings.kickAssAdditionalClassPath]
-      .filter(Boolean)
-      .join(path.delimiter);
+    const classpath = [settings.kickAssJar, settings.kickAssAdditionalClassPath].filter(Boolean).join(path.delimiter);
 
     const proc = spawn(
       settings.javaBin,
@@ -139,25 +135,13 @@ async function getKickAssembler4AsmInfo(document) {
   return await new Promise((resolve) => {
     let output = "";
 
-    const classpath = [
-      settings.kickAssJar,
-      kickassRunnerJar,
-      settings.kickAssAdditionalClassPath]
+    const classpath = [settings.kickAssJar, kickassRunnerJar, settings.kickAssAdditionalClassPath]
       .filter(Boolean)
       .join(path.delimiter);
 
     const proc = spawn(
       settings.javaBin,
-      [
-        "-cp",
-        classpath,
-        "com.noice.kickass.KickAssRunner",
-        fileName,
-        "-asminfo",
-        "errors",
-        "-asminfo",
-        "files",
-      ],
+      ["-cp", classpath, "com.noice.kickass.KickAssRunner", fileName, "-asminfo", "errors", "-asminfo", "files"],
       { cwd: path.dirname(fileName) }
     );
 
